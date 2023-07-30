@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:mediplus/core/constant/appcolor.dart';
 import 'package:mediplus/core/shared_widgets/primary_button.dart';
 
-import '../../../core/shared_widgets/custom_divider.dart';
-import '../../../core/shared_widgets/custom_textfield.dart';
+import '../../../../core/shared_widgets/custom_divider.dart';
+import '../../../../core/shared_widgets/custom_textfield.dart';
 import '../controller/signup_controller.dart';
-import '../widget/social_media_widget.dart';
+import '../../widget/social_media_widget.dart';
 import 'signup2_screen.dart';
 
 class SignUPSceen extends StatelessWidget {

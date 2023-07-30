@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:group_radio_button/group_radio_button.dart';
-import 'package:mediplus/features/authentication/view/success.dart';
+import 'package:mediplus/features/authentication/sign_up/view/success.dart';
 
-import '../../../core/constant/appcolor.dart';
-import '../../../core/shared_widgets/custom_textfield.dart';
-import '../../../core/shared_widgets/primary_button.dart';
+import '../../../../core/constant/appcolor.dart';
+import '../../../../core/shared_widgets/custom_textfield.dart';
+import '../../../../core/shared_widgets/primary_button.dart';
 import '../controller/signup2_controller.dart';
 
 class SignUpTwoScreen extends StatelessWidget {

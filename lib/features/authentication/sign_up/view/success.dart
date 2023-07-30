@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../core/constant/appcolor.dart';
-import '../../../core/shared_widgets/primary_button.dart';
+import '../../../../core/constant/appcolor.dart';
+import '../../../../core/shared_widgets/primary_button.dart';
 
 class SuccessScreen extends StatelessWidget {
   const SuccessScreen({super.key});
