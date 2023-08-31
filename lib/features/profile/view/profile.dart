@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:mediplus/features/profile/view/edit_profile.dart';
 
 import '../../../core/constant/appcolor.dart';
 import '../widgets/grey_container.dart';
@@ -34,19 +32,19 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     maxRadius: 80,
-                    backgroundImage: const AssetImage(
+                    backgroundImage: AssetImage(
                       'assets/images/doc1.jpg',
                     ),
                     child: Stack(
-                      children: const [
+                      children: [
                         Positioned(
                           top: 100,
                           // bottom: ,
                           left: 100,
                           child: Icon(
-                            MaterialCommunityIcons.camera,
+                            Icons.camera,
                             color: AppColor.primaryColor,
                           ),
                         ),
@@ -97,7 +95,7 @@ Widget _buildCustomContainer(BuildContext context,
       title: Text(text),
       onTap: () => ontap,
       trailing: const Icon(
-        MaterialCommunityIcons.greater_than,
+        Icons.arrow_back_ios_new,
         size: 20,
         color: AppColor.blackColor,
       ),

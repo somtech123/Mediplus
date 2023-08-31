@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 
 import '../../../core/constant/appcolor.dart';
 import '../../../core/shared_widgets/primary_button.dart';
-import '../../authentication/view/signup.dart';
+import '../../authentication/login/view/login.dart';
+import '../../authentication/sign_up/view/signup.dart';
 
 class OnboardingScreenTwo extends StatelessWidget {
   const OnboardingScreenTwo({super.key});
@@ -57,7 +58,9 @@ class OnboardingScreenTwo extends StatelessWidget {
                 SizedBox(height: 20.h),
                 PrimaryButton(
                   label: 'Sign in',
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => LoginScreen());
+                  },
                   backgroundColor: AppColor.secondary,
                   labelColor: AppColor.primaryColor,
                   borderColor: AppColor.primaryColor,

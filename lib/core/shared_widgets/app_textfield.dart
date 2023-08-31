@@ -80,7 +80,7 @@ class AppTextField extends StatelessWidget {
             color: Colors.white,
             child: Text(
               labelText,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 color: AppColor.blackColor,
               ),

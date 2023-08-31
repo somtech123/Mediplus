@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constant/appcolor.dart';
+import '../../../core/shared_widgets/loading_widgets.dart';
 
 class SocialMediaButton extends StatelessWidget {
   const SocialMediaButton({super.key});
@@ -13,17 +14,19 @@ class SocialMediaButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Row(
-          children: [
-            SvgPicture.asset('assets/svgs/icons8-google.svg'),
-            Text(
-              'Google',
-              style: Theme.of(context).textTheme.caption!.copyWith(
-                    fontSize: 15.sp,
-                    color: AppColor.blackColor,
-                  ),
-            )
-          ],
+        GestureDetector(
+          child: Row(
+            children: [
+              SvgPicture.asset('assets/svgs/icons8-google.svg'),
+              Text(
+                'Google',
+                style: Theme.of(context).textTheme.caption!.copyWith(
+                      fontSize: 15.sp,
+                      color: AppColor.blackColor,
+                    ),
+              )
+            ],
+          ),
         ),
         Row(
           children: [

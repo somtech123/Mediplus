@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -18,14 +19,14 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColor.secondary,
         elevation: 0,
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Text(
               "Select Field",
               style: TextStyle(color: AppColor.blackColor),
             ),
-            Icon(MaterialCommunityIcons.arrow_down)
+            Icon(Icons.arrow_drop_down)
           ],
         ),
         centerTitle: true,
