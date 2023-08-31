@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "580852719579",
+    "project_id": "mediplus-822cf",
+    "storage_bucket": "mediplus-822cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580852719579:android:0a5e169df22b733ba991fe",
+        "android_client_info": {
+          "package_name": "com.example.mediplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580852719579-blmsq12k504q3s8omkf9ta1fi5gtg9go.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6GrOs_OTFz7UJDq7OoN4lwmKQ67gyM_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580852719579-blmsq12k504q3s8omkf9ta1fi5gtg9go.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

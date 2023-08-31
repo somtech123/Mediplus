@@ -8,6 +8,7 @@ import 'package:mediplus/features/authentication/sign_up/view/success.dart';
 import '../../../../core/constant/appcolor.dart';
 import '../../../../core/shared_widgets/custom_textfield.dart';
 import '../../../../core/shared_widgets/primary_button.dart';
+import '../../widget/phone_text_field.dart';
 import '../controller/signup2_controller.dart';
 
 class SignUpTwoScreen extends StatelessWidget {
@@ -45,10 +46,11 @@ class SignUpTwoScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              CustomBorderTextField(
-                hintText: 'Mobile Number',
+              SizedBox(height: 20.h),
+              PhoneTextField(
+                controller: ctr.phoneController,
+                errorMessage: ctr.phoneErrorText.value,
               ),
-              SizedBox(height: 10.h),
               SizedBox(
                 width: 100.w,
                 child: CustomBorderTextField(

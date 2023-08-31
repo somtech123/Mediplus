@@ -66,7 +66,7 @@ class _DashboardCardState extends State<DashboardCard> {
                   SizedBox(height: 10.h),
                   DotsIndicator(
                     dotsCount: 5,
-                    position: double.parse("$index"),
+                    position: int.parse("$index"),
                     decorator: DotsDecorator(
                       color: AppColor.greyColor,
                       spacing: const EdgeInsets.symmetric(horizontal: 4.5),

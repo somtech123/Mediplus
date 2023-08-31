@@ -58,7 +58,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           SizedBox(height: 10.h),
                           DotsIndicator(
                             dotsCount: 3,
-                            position: double.parse("$_index"),
+                            position: int.parse("$_index"),
                             decorator: DotsDecorator(
                               color: AppColor.greyColor,
                               spacing:
@@ -105,7 +105,6 @@ class CustomPage extends StatelessWidget {
       children: [
         Container(
           height: h / 2 + 100,
-          width: Get.width * 400,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(onboardingModel.imageUrl!),

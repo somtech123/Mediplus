@@ -6,6 +6,7 @@ import 'package:mediplus/core/shared_widgets/primary_button.dart';
 
 import '../../../../core/shared_widgets/custom_divider.dart';
 import '../../../../core/shared_widgets/custom_textfield.dart';
+import '../../../../core/shared_widgets/loading_widgets.dart';
 import '../controller/signup_controller.dart';
 import '../../widget/social_media_widget.dart';
 import 'signup2_screen.dart';
@@ -81,7 +82,8 @@ class SignUPSceen extends StatelessWidget {
               PrimaryButton(
                   label: 'Create Account',
                   onPressed: () {
-                    Get.to(() => SignUpTwoScreen());
+                    showLoading(context);
+                    //   Get.to(() => LoadingPage());
                   }),
               SizedBox(height: 15.h),
               Row(

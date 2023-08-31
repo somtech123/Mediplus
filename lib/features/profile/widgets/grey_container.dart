@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediplus/features/profile/view/edit_profile.dart';
@@ -67,8 +68,8 @@ class GreyContainer extends StatelessWidget {
                       onTap: () {
                         Get.to(() => EditProfileScreen());
                       },
-                      child: const Icon(
-                        MaterialCommunityIcons.pencil,
+                      child: Icon(
+                        MdiIcons.pencil,
                         color: AppColor.secondary,
                       ),
                     ),
