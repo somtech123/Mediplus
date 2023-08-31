@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mediplus/core/gloalctr.dart';
 import 'package:mediplus/features/splash/screen/splash_screen.dart';
 
 import 'core/constant/appcolor.dart';
@@ -14,11 +15,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  var ctr = Get.put(GlobalController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
