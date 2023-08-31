@@ -34,7 +34,7 @@ showErrorAlertWidget(BuildContext context,
     widget: Column(
       children: [
         ListTile(
-          leading: SvgPicture.asset('assets/svgs/Alert icons.svg'),
+          //   leading: SvgPicture.asset('assets/svgs/Alert icons.svg'),
           trailing: InkWell(
               onTap: () => Get.back(),
               child: SvgPicture.asset('assets/svgs/dimiss_button.svg')),
