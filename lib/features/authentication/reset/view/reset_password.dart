@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/constant/appcolor.dart';
 import '../../../../core/shared_widgets/custom_textfield.dart';
 import '../../../../core/shared_widgets/primary_button.dart';
+import '../controller/reset_controller.dart';
 
 class ResetPassWord extends StatelessWidget {
-  const ResetPassWord({super.key});
+  ResetPassWord({super.key});
+  var ctr = Get.put(ResetController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +49,13 @@ class ResetPassWord extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 50.h),
-                CustomBorderTextField(
-                  hintText: 'Your Email',
+                Obx(
+                  () => CustomBorderTextField(
+                    hintText: 'Your Email',
+                    controller: ctr.emailController,
+                    onChanged: (p) => ctr.clearError(ctr.emailErrorText),
+                    errorMessage: ctr.emailErrorText.value,
+                  ),
                 ),
                 SizedBox(height: 10.h),
                 Row(
@@ -68,7 +76,11 @@ class ResetPassWord extends StatelessWidget {
                 SizedBox(
                   height: 150.h,
                 ),
-                PrimaryButton(label: 'Send', onPressed: () {}),
+                PrimaryButton(
+                    label: 'Send',
+                    onPressed: () {
+                      ctr.validateInput();
+                    }),
               ],
             ),
           ),

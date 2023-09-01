@@ -136,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                     height: 50.h,
                   ),
                   const CustomDivider(),
-                  const SocialMediaButton()
+                  SocialMediaButton()
                 ],
               ),
             ),

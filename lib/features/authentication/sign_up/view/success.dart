@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/constant/appcolor.dart';
 import '../../../../core/shared_widgets/primary_button.dart';
+import '../../../bottom_tab/screen/bottom_tab.dart';
 
 class SuccessScreen extends StatelessWidget {
   const SuccessScreen({super.key});
@@ -62,7 +63,11 @@ class SuccessScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            PrimaryButton(label: 'Go to Homepage', onPressed: () {}),
+            PrimaryButton(
+                label: 'Go to Homepage',
+                onPressed: () {
+                  Get.offAll(() => BottomTab());
+                }),
           ]),
         ),
       ),
