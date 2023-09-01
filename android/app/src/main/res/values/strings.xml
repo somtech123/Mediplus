@@ -1,0 +1,7 @@
+
+<resources>
+   <string name="app_name">mediplus</string>
+   <string name="facebook_app_id">643793531182817</string>
+   <string name="fb_login_protocol_scheme">fb643793531182817</string>
+   <string name="facebook_client_token">59acb89169ec5b1d1253fc80e67914a1</string>
+</resources>
