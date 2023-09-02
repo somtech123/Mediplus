@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,9 +8,11 @@ import 'package:mediplus/features/profile/view/edit_profile.dart';
 import 'dart:math' as math;
 
 import '../../../core/constant/appcolor.dart';
+import '../../../core/services/authentication/model/user_model.dart';
 
 class GreyContainer extends StatelessWidget {
-  const GreyContainer({super.key});
+  const GreyContainer({super.key, required this.userModel});
+  final UserModel userModel;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +20,9 @@ class GreyContainer extends StatelessWidget {
       painter: EdgePainter(),
       child: Container(
           width: Get.width,
-          height: 500.h,
-          padding: const EdgeInsets.all(20),
+          height: 370.h,
+          padding:
+              const EdgeInsets.only(left: 20, right: 10, bottom: 20, top: 10),
           decoration: BoxDecoration(
               color: AppColor.greyColor.withOpacity(0.3),
               borderRadius: const BorderRadius.all(Radius.circular(12))),
@@ -36,32 +40,57 @@ class GreyContainer extends StatelessWidget {
                     height: 8.h,
                   ),
                   _buildheading(context, text: "name"),
-                  _buildsubheading(context, text: "Tega Swift"),
+                  userModel.firstName == '' && userModel.lastName == ''
+                      ? _buildsubheading(context, text: "${userModel.userName}")
+                      : _buildsubheading(context,
+                          text: "${userModel.firstName} ${userModel.lastName}"),
                   SizedBox(
                     height: 13.h,
                   ),
-                  _buildheading(context, text: "Date of birth"),
-                  _buildsubheading(context, text: "25 of feb 2021"),
+                  Visibility(
+                      visible:
+                          userModel.firstName != '' && userModel.lastName != '',
+                      child: _buildheading(context, text: "Date of birth")),
+                  Visibility(
+                    visible:
+                        userModel.firstName != '' && userModel.lastName != '',
+                    child: _buildsubheading(
+                      context,
+                      text: DateFormat("d 'of' MMM y")
+                          .format(userModel.birthDate!),
+                    ),
+                  ),
                   SizedBox(
                     height: 13.h,
                   ),
-                  _buildheading(context, text: "phone number"),
-                  _buildsubheading(context, text: "+123456789"),
+                  Visibility(
+                      visible: userModel.phone != null,
+                      child: _buildheading(context, text: "phone number")),
+                  Visibility(
+                    visible: userModel.phone != null,
+                    child:
+                        _buildsubheading(context, text: "${userModel.phone}"),
+                  ),
                   SizedBox(
                     height: 13.h,
                   ),
-                  _buildheading(context, text: "address"),
-                  _buildsubheading(context,
-                      text: "12 lafage kitchen umuchima owerri"),
+                  Visibility(
+                      visible: userModel.state != '' && userModel.country != '',
+                      child: _buildheading(context, text: "location")),
+                  Visibility(
+                    visible: userModel.state != '' && userModel.country != '',
+                    child: _buildsubheading(context,
+                        text: "${userModel.state}, ${userModel.country}"),
+                  ),
                   SizedBox(
                     height: 13.h,
                   ),
                   _buildheading(context, text: "email"),
-                  _buildsubheading(context, text: "somtech@somteh.com"),
+                  _buildsubheading(context, text: "${userModel.email}"),
                 ],
               ),
               Positioned(
-                left: Get.width * 0.7,
+                right: 2,
                 child: Column(
                   children: [
                     InkWell(

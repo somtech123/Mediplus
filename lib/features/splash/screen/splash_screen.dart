@@ -30,9 +30,10 @@ class SplashScreen extends StatelessWidget {
             const Text(
               "Mediplus",
               style: TextStyle(
-                  color: AppColor.secondary,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
+                color: AppColor.secondary,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
             )
           ],
         ),

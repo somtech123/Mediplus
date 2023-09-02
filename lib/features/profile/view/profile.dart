@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constant/appcolor.dart';
+import '../../../core/services/authentication/model/user_model.dart';
+import '../../../core/utlis/shimmer_manager.dart';
+import '../controller/profile_controller.dart';
 import '../widgets/grey_container.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+  var ctr = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +30,8 @@ class ProfileScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 10.h),
           child: Column(children: [
-            Container(
+            SizedBox(
               width: Get.width,
-              //   height: 100.h,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,7 +76,49 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(
                     height: 30.h,
                   ),
-                  GreyContainer()
+                  FutureBuilder<UserModel>(
+                    future: ctr.getUserDetail(),
+                    //ctr.userServices.getUserDetails(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return ShimmerManager.sectionShimmer(context);
+                      } else if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      } else if (snapshot.hasData) {
+                        debugPrint('-------------has data------------');
+                        // UserModel user = snapshot.data!;
+                        return GreyContainer(
+                          userModel: snapshot.data!,
+                        );
+                      } else {
+                        debugPrint('-------------no data------------');
+                        return SizedBox();
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  GestureDetector(
+                    onTap: () => ctr.authservices.signOut(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Logout',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17,
+                              color: Colors.red),
+                        ),
+                        SizedBox(width: 10.w),
+                        SvgPicture.asset(
+                          'assets/svgs/logout.svg',
+                          height: 25,
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

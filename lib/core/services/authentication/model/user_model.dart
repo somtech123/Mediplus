@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class UserModel {
   String? userName;
   String? id;
@@ -40,7 +42,9 @@ class UserModel {
         email: json["email"],
         bio: json["bio"],
         state: json['state'],
-        birthDate: DateTime.parse(json["birthDate"]),
+        birthDate: json["birthDate"] != ''
+            ? DateTime.parse(json["birthDate"])
+            : DateTime.now(),
         dateCreated: DateTime.parse(json["dateCreated"]),
       );
 

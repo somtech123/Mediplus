@@ -78,7 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         label: 'Next',
                         labelColor: AppColor.secondary,
                         onPressed: () {
-                          Get.offAll(() => OnboardingScreenTwo());
+                          Get.offAll(() => const OnboardingScreenTwo());
                         },
                       ),
                     )
