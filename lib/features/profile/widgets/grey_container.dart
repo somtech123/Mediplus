@@ -5,7 +5,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediplus/features/profile/view/edit_profile.dart';
-import 'dart:math' as math;
 
 import '../../../core/constant/appcolor.dart';
 import '../../../core/services/authentication/model/user_model.dart';
@@ -125,7 +124,8 @@ class GreyContainer extends StatelessWidget {
 Widget _buildheading(BuildContext context, {required String text}) {
   return Text(
     text,
-    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+        fontWeight: FontWeight.w500, fontSize: 17, color: AppColor.blackColor),
   );
 }
 
@@ -133,7 +133,8 @@ Widget _buildsubheading(BuildContext context, {required String text}) {
   return Text(
     text,
     maxLines: 2,
-    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+        fontWeight: FontWeight.w600, fontSize: 17, color: AppColor.blackColor),
   );
 }
 

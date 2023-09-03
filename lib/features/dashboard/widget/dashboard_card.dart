@@ -105,7 +105,7 @@ class CustomPgeView extends StatelessWidget {
               bottomRight: Radius.circular(40),
             ),
             image: DecorationImage(
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               image: AssetImage("assets/images/doc1.jpg"),
             ),
           ),

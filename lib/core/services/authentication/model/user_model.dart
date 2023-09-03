@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class UserModel {
   String? userName;
   String? id;

@@ -16,6 +16,7 @@ class AppTextField extends StatelessWidget {
   final bool? filled;
   final bool? min;
   final String labelText;
+  final Widget? suffix;
 
   final TextInputType? textInputType;
 
@@ -23,6 +24,7 @@ class AppTextField extends StatelessWidget {
       {super.key,
       this.errorMessage,
       this.controller,
+      this.suffix,
       this.onChanged,
       this.filled,
       this.maxLength,
@@ -60,7 +62,10 @@ class AppTextField extends StatelessWidget {
                 : TextInputType.number,
             decoration: InputDecoration(
               fillColor: const Color(0xffFBFBFB),
+              suffixIcon: suffix,
               filled: filled,
+              contentPadding:
+                  min == false ? EdgeInsets.all(5) : const EdgeInsets.all(12),
               errorText: errorMessage == "" || errorMessage == null
                   ? null
                   : errorMessage,
@@ -73,17 +78,14 @@ class AppTextField extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: -0.2,
-          left: min == false ? 35 : 50,
+          top: 8.h,
+          left: min == false ? 35.w : 50.w,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             color: Colors.white,
             child: Text(
               labelText,
-              style: const TextStyle(
-                fontSize: 20,
-                color: AppColor.blackColor,
-              ),
+              style: Theme.of(context).textTheme.button!.copyWith(fontSize: 12),
             ),
           ),
         ),
