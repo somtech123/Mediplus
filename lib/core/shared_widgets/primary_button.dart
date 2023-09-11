@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../constant/appcolor.dart';
 import '../constant/int_constant.dart';
@@ -229,6 +230,75 @@ class ExtraSmallButton extends StatelessWidget {
           color: labelColor ?? AppColor.primaryColor,
           fontFamily: 'Raleway',
           fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}
+
+class BorderButton extends StatelessWidget {
+  const BorderButton({super.key, required this.child, required this.ontap});
+  final Widget child;
+  final VoidCallback ontap;
+
+  @override
+  Widget build(BuildContext context) {
+    final h = sHeight(context);
+    final fs = fullScreen(context);
+
+    return InkWell(
+      onTap: ontap,
+      child: AnimatedContainer(
+        height: h(58.0),
+        width: fs('width'),
+        alignment: Alignment.center,
+        duration: const Duration(
+            microseconds: IntConstants.buttonSplashAnimationDuration),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+          border: Border.all(color: AppColor.primaryColor, width: 2),
+        ),
+        child: child,
+      ),
+    );
+  }
+}
+
+class GreyButton extends StatelessWidget {
+  const GreyButton(
+      {super.key, required this.ontap, required this.icon, required this.text});
+  final VoidCallback ontap;
+  final String text;
+  final IconData icon;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: ontap,
+      child: AnimatedContainer(
+        width: 100.w,
+        height: 40.h,
+        duration: const Duration(
+            microseconds: IntConstants.buttonSplashAnimationDuration),
+        decoration: BoxDecoration(
+          color: AppColor.greyWithOPacity,
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.dm),
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: AppColor.primaryColor),
+            SizedBox(width: 5.w),
+            Text(
+              text,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontSize: 11,
+                  color: AppColor.blackColor,
+                  fontWeight: FontWeight.w400),
+            )
+          ],
         ),
       ),
     );

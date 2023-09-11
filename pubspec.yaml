@@ -58,6 +58,7 @@ dependencies:
   google_sign_in: ^6.1.5
   flutter_facebook_auth: ^6.0.1
   shimmer: ^3.0.0
+  expandable_text: ^2.3.0
   
   intl_phone_field: ^3.1.0
   

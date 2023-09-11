@@ -4,6 +4,7 @@ class AppColor {
   static const Color primaryColor = Color.fromARGB(255, 39, 32, 232);
   static const Color secondary = Colors.white;
   static const Color greyColor = Colors.grey;
+  static Color greyWithOPacity = AppColor.greyColor.withOpacity(0.3);
   static const Color blackColor = Colors.black;
   static Color alert = Color(0xffFEF1F1);
   static const Color ratingColor = Color.fromARGB(255, 252, 228, 11);
