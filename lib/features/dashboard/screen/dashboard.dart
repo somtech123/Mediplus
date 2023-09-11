@@ -18,9 +18,15 @@ class Dashboard extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColor.secondary,
         elevation: 0,
-        title: Text(
-          "Hey, Oscar",
-          style: TextStyle(color: AppColor.blackColor, fontSize: 20.sp),
+        title: Padding(
+          padding: EdgeInsets.only(left: 5.h),
+          child: Text(
+            "Hey, Oscar",
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: AppColor.blackColor, fontSize: 20.sp),
+          ),
         ),
         actions: [
           GestureDetector(
@@ -67,19 +73,21 @@ class Dashboard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Discover",
-                        style: TextStyle(
-                            fontSize: 20.sp, color: AppColor.secondary),
-                      ),
+                      Text("Discover",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontSize: 20.sp, color: AppColor.secondary)),
                       SizedBox(
                         height: 10.h,
                       ),
-                      Text(
-                        "Find your suitable doctor!",
-                        style: TextStyle(
-                            fontSize: 12.sp, color: AppColor.secondary),
-                      )
+                      Text("Find your suitable doctor!",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontSize: 12.sp, color: AppColor.secondary))
                     ],
                   ),
                 ),
@@ -102,7 +110,7 @@ class Dashboard extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              FeatureCard(),
+              const FeatureCard(),
               SizedBox(
                 height: 20.h,
               ),

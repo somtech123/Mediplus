@@ -25,10 +25,10 @@ class BottomTab extends StatefulWidget {
 class _BottomTabState extends State<BottomTab> {
   var ctr = Get.put(BottomTabController());
 
-  final List<Widget> _buildScreen = const [
+  final List<Widget> _buildScreen = [
     Dashboard(),
     SearchScreen(),
-    // AppointMentScreen(),
+    AppoinmentScreen(),
     ChatScreen(),
     ProfileScreen()
   ];
@@ -51,7 +51,8 @@ class _BottomTabState extends State<BottomTab> {
             unselectedItemColor: Color.fromARGB(255, 9, 5, 5),
             backgroundColor: AppColor.secondary,
             showUnselectedLabels: true,
-            iconSize: 30.h,
+            iconSize: 25.h,
+            type: BottomNavigationBarType.fixed,
           )),
     );
   }
@@ -78,19 +79,19 @@ class _BottomTabState extends State<BottomTab> {
         ),
         label: "Search",
       ),
-      // BottomNavigationBarItem(
-      //     icon: SvgPicture.asset(
-      //       "assets/svgs/calender-icon.svg",
-      //       height: 20.h,
-      //       color: ctr.tabIndex.value == 2
-      //           ? AppColor.primaryColor
-      //           : AppColor.greyColor,
-      //     ),
-      //     label: "Appointment"),
+      BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            "assets/svgs/calender-icon.svg",
+            height: 20.h,
+            color: ctr.tabIndex.value == 2
+                ? AppColor.primaryColor
+                : AppColor.greyColor,
+          ),
+          label: "Appointment"),
       BottomNavigationBarItem(
           icon: SvgPicture.asset(
             "assets/svgs/chat-bubble-icon.svg",
-            color: ctr.tabIndex.value == 2
+            color: ctr.tabIndex.value == 3
                 ? AppColor.primaryColor
                 : AppColor.greyColor,
             height: 20.h,
@@ -99,7 +100,7 @@ class _BottomTabState extends State<BottomTab> {
       BottomNavigationBarItem(
           icon: SvgPicture.asset(
             "assets/svgs/profile-circle.svg",
-            color: ctr.tabIndex.value == 3
+            color: ctr.tabIndex.value == 4
                 ? AppColor.primaryColor
                 : AppColor.greyColor,
             height: 20.h,

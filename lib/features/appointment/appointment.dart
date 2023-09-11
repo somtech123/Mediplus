@@ -34,12 +34,11 @@ class AppoinmentScreen extends StatelessWidget {
                     height: 200.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppColor.greyColor,
+                      color: AppColor.greyWithOPacity,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      //  crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
                           padding: EdgeInsets.all(10),
@@ -80,18 +79,17 @@ class AppoinmentScreen extends StatelessWidget {
                     ),
                     eventOptions: EventOptions(),
                     dayOptions: DayOptions(),
-
-                    // events: [
-                    //   Event(
-                    //     child: const Text('Laravel Event'),
-                    //     dateTime: CalendarDateTime(
-                    //       year: 1401,
-                    //       month: 5,
-                    //       day: 12,
-                    //       calendarType: CalendarType.GREGORIAN,
-                    //     ),
-                    //   ),
-                    // ],
+                    events: [
+                      Event(
+                        child: const Text('Laravel Event'),
+                        dateTime: CalendarDateTime(
+                          year: 2023,
+                          month: 9,
+                          day: 9,
+                          calendarType: CalendarType.GREGORIAN,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -116,13 +116,6 @@ class SignUpTwoScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // SizedBox(
-                //   width: 100.w,
-                //   child: CustomBorderTextField(
-                //     hintText: 'Age',
-                //   ),
-                // ),
                 SizedBox(height: 10.h),
                 RadioGroup<String>.builder(
                   direction: Axis.vertical,

@@ -71,3 +71,62 @@ showErrorAlertWidget(BuildContext context,
     ),
   );
 }
+
+buildLogoutAlertWidget(BuildContext context,
+    {required VoidCallback action1, VoidCallback? action2}) {
+  return buildCustomAlertWidgetWrapper(context,
+      color: AppColor.alert,
+      bgColor: AppColor.alert,
+      widget: Column(
+        children: [
+          ListTile(
+            leading: SvgPicture.asset('assets/svgs/alert_icon.svg'),
+            title: Text(
+              "Confirm Logout",
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  color: AppColor.blackColor),
+            ),
+            trailing: InkWell(
+              child: SvgPicture.asset('assets/svgs/Dissmiss.svg'),
+              onTap: () => Get.back(),
+            ),
+            subtitle: Text(
+              "Are you sure you want to log out? You will be signed out of your account, confirm your decision to proceed.",
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: AppColor.blackColor),
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 120.w,
+                height: 50.h,
+                child: SmallButton(
+                  onPressed: action1,
+                  label: 'Yes, Logout',
+                  labelColor: AppColor.secondary,
+                  backgroundColor: Colors.red,
+                ),
+              ),
+              SizedBox(
+                width: 120.w,
+                height: 50.h,
+                child: SmallButton(
+                  onPressed: action2 ?? () => Get.back(),
+                  hideBorder: true,
+                  label: 'No, Cancel',
+                  labelColor: AppColor.blackColor,
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+            ],
+          )
+        ],
+      ));
+}

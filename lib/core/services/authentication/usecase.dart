@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../../../features/onboarding/screen/onboarding.dart';
 import 'model/user_model.dart';
 
 class AuthServices {
@@ -41,7 +43,7 @@ class AuthServices {
       "firstName": payload.firstName,
       "lastName": payload.lastName,
       "gender": payload.gender,
-      "country": payload.gender,
+      "country": payload.country,
       "phone": payload.phone,
       "email": payload.email,
       "bio": payload.bio,
@@ -158,5 +160,10 @@ class AuthServices {
       debugPrint(e.toString());
     }
     return res;
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
+    Get.offAllNamed(OnboardingScreen.path);
   }
 }
