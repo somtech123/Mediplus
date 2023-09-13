@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -43,64 +44,60 @@ class DoctorDetailPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                        height: 150.h,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: AppColor.greyWithOPacity,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15.dm),
-                          ),
+                      height: 150.h,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: AppColor.greyWithOPacity,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15.dm),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 80.w * 2,
-                              height: 120.h,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 60.w * 2,
+                            height: double.infinity,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
                                 fit: BoxFit.contain,
                                 image: MemoryImage(ctr.bodyBytes.value),
-                              )),
+                              ),
                             ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Consultation fee",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 20,
-                                          color: AppColor.blackColor),
-                                ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/svgs/nigeria-naira-icon.svg',
-                                      height: 15,
-                                      color: AppColor.primaryColor,
-                                    ),
-                                    Text(
-                                      " 67, 00",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 20,
-                                              color: AppColor.primaryColor),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
-                        )),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Doctor John abbas",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20,
+                                        color: AppColor.blackColor),
+                              ),
+                              Text('surgon'),
+                              Row(
+                                children: [
+                                  _ratingBar(context, rating: 5),
+                                  Text(
+                                    "(5)",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColor.rating),
+                                  )
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                     SizedBox(height: 20.h),
-                    _buildDoctorInfo(context),
+                    //  _buildDoctorInfo(context),
                     SizedBox(height: 20.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +124,7 @@ class DoctorDetailPage extends StatelessWidget {
                             ontap: () {}, text: 'message', icon: Icons.message),
                       ],
                     ),
-                    DoctorDetailTabWidget()
+                    const DoctorDetailTabWidget()
                   ],
                 ),
               ),
@@ -169,6 +166,22 @@ class DoctorDetailPage extends StatelessWidget {
               ),
         )
       ],
+    );
+  }
+
+  Widget _ratingBar(BuildContext context, {required double rating}) {
+    bool isRated = false;
+    return RatingBar.builder(
+      itemBuilder: (context, index) => const Icon(
+        Icons.star,
+        color: AppColor.rating,
+      ),
+      initialRating: double.parse('5'),
+      minRating: 0,
+      maxRating: 5,
+      itemSize: 15.h,
+      ignoreGestures: true,
+      onRatingUpdate: (value) {},
     );
   }
 

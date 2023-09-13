@@ -11,21 +11,21 @@ class StorageMethod {
   Future<String> uploadToStorage(
       {required String fileName, required Uint8List file}) async {
     String res = "Some error occurred";
+    String imageUrl = '';
     try {
-      Reference ref =
-          _storage.ref().child(fileName).child(_auth.currentUser!.uid);
+      Reference ref = _storage.ref().child(_auth.currentUser!.uid);
 
       UploadTask uploadTask = ref.putData(file);
       res = 'success';
 
       TaskSnapshot snap = await uploadTask;
 
-      await snap.ref.getDownloadURL();
+      imageUrl = await snap.ref.getDownloadURL();
     } on FirebaseException catch (e) {
       res = e.code;
     } catch (e) {
       debugPrint(e.toString());
     }
-    return res;
+    return imageUrl;
   }
 }

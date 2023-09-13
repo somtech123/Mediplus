@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediplus/core/constant/appcolor.dart';
-import 'package:mediplus/features/dashboard/screen/tab/favourite_screen.dart';
+import 'package:mediplus/features/dashboard/widget/tab/favourite_screen.dart';
 
 import '../../../core/shared_widgets/custom_textfield.dart';
 import '../widget/dashboard_banner.dart';

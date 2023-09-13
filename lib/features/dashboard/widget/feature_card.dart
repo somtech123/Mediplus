@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mediplus/core/constant/appcolor.dart';
 
-import '../../appointment/appointment.dart';
+import '../screen/appointment.dart';
 
 class FeatureCard extends StatelessWidget {
   const FeatureCard({super.key});
@@ -18,7 +18,7 @@ class FeatureCard extends StatelessWidget {
             icon: MdiIcons.doctor, text: "Doctor", ontap: () {}),
         _buildFeatureCard(context, icon: MdiIcons.calendar, text: "Appointment",
             ontap: () {
-          Get.to(() => AppoinmentScreen());
+          //  Get.to(() => AppoinmentScreen());
         }),
         _buildFeatureCard(context,
             icon: MdiIcons.prescription, text: "Prescription", ontap: () {}),

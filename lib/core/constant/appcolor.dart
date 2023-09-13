@@ -10,6 +10,7 @@ class AppColor {
   static const Color ratingColor = Color.fromARGB(255, 252, 228, 11);
   static const Color lightBlue = Color.fromARGB(255, 167, 192, 237);
   static Color errorColor = Colors.red.shade400;
+  static const Color rating = Colors.orange;
 
   static const Color buttonOverlay = Color(0xffE2F3FF);
 }

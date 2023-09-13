@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mediplus/core/services/user/model/doctor_model.dart';
 
 import '../authentication/model/user_model.dart';
 
@@ -21,6 +22,18 @@ class UserServices {
       debugPrint(e.toString());
       debugPrint('-------------empty data------------');
       return UserModel();
+    }
+  }
+
+  Future<List<DoctorModel>> getAllDoctors() async {
+    try {
+      final snap = await _firestore.collection('doctor').get();
+      final userdata = snap.docs
+          .map((e) => DoctorModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+      return userdata;
+    } catch (e) {
+      return [];
     }
   }
 

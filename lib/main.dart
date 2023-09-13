@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mediplus/core/gloalctr.dart';
+import 'package:mediplus/env/private_key.dart';
 import 'package:mediplus/features/splash/screen/splash_screen.dart';
 
 import 'core/constant/appcolor.dart';
@@ -13,7 +15,8 @@ import 'core/route/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  Stripe.publishableKey = PrivateKey.stripePublicKey;
+  await Stripe.instance.applySettings();
   await Firebase.initializeApp();
   runApp(MyApp());
 }

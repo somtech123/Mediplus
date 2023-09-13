@@ -237,8 +237,8 @@ class ExtraSmallButton extends StatelessWidget {
 }
 
 class BorderButton extends StatelessWidget {
-  const BorderButton({super.key, required this.child, required this.ontap});
-  final Widget child;
+  const BorderButton({super.key, required this.text, required this.ontap});
+  final String text;
   final VoidCallback ontap;
 
   @override
@@ -247,20 +247,25 @@ class BorderButton extends StatelessWidget {
     final fs = fullScreen(context);
 
     return InkWell(
-      onTap: ontap,
-      child: AnimatedContainer(
-        height: h(58.0),
-        width: fs('width'),
-        alignment: Alignment.center,
-        duration: const Duration(
-            microseconds: IntConstants.buttonSplashAnimationDuration),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-          border: Border.all(color: AppColor.primaryColor, width: 2),
-        ),
-        child: child,
-      ),
-    );
+        onTap: ontap,
+        child: AnimatedContainer(
+            height: h(58.0),
+            width: fs('width'),
+            alignment: Alignment.center,
+            duration: const Duration(
+                microseconds: IntConstants.buttonSplashAnimationDuration),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              border: Border.all(color: AppColor.primaryColor, width: 2),
+            ),
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 16,
+                    color: AppColor.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+            )));
   }
 }
 

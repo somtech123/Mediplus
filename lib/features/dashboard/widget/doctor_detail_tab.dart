@@ -59,7 +59,7 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
                     tabIndex: tabIndex,
                   )
                 ],
-                isScrollable: true,
+                isScrollable: false,
                 controller: controller,
                 indicator: const BoxDecoration(),
                 onTap: (value) {
@@ -76,7 +76,8 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
           height: Get.height,
           child: TabBarView(
             controller: controller,
-            children: const [
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -84,14 +85,14 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
                   DocInfo(),
                 ],
               ),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   DocExperience(),
                 ],
               ),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
