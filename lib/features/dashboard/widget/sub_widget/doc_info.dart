@@ -1,14 +1,17 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/constant/appcolor.dart';
 import '../../../../core/shared_widgets/primary_button.dart';
+import '../../controller/doctor_detail_controller.dart';
+import '../../screen/appointment.dart';
 
 class DocInfo extends StatelessWidget {
-  const DocInfo({super.key});
+  DocInfo({super.key});
 
-  //bool isExpanded = false;
+  var ctr = Get.find<DoctorDetailController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,28 +35,10 @@ class DocInfo extends StatelessWidget {
           ),
           SizedBox(height: 20.h),
           BorderButton(
-            ontap: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.video_call,
-                  color: AppColor.primaryColor,
-                  size: 40.h,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(
-                  'see doctor',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontSize: 16,
-                        color: AppColor.primaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                )
-              ],
-            ),
+            ontap: () {
+              Get.to(() => AppoinmentScreen(), arguments: ctr.bodyBytes);
+            },
+            text: 'Book Appointment',
           )
         ],
       ),

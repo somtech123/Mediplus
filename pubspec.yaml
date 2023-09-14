@@ -43,12 +43,12 @@ dependencies:
   get: ^4.6.5
   get_it: ^7.2.0
   google_fonts: ^5.1.0
-  http: null
+  http: 
   infinite_carousel: null
   intl: ^0.18.1
   persistent_bottom_nav_bar: ^5.0.2
   photo_view: ^0.14.0
-  pinput: ^3.0.1
+  pinput: ^3.0.1 
   flutter_spinkit: ^5.2.0
   cloud_firestore: ^4.1.0
   firebase_storage: ^11.0.6
@@ -58,11 +58,19 @@ dependencies:
   google_sign_in: ^6.1.5
   flutter_facebook_auth: ^6.0.1
   shimmer: ^3.0.0
+  image_picker: ^1.0.4
+  
+  flutter_rating_bar: ^4.0.1
   expandable_text: ^2.3.0
   
   intl_phone_field: ^3.1.0
+  dotted_border: ^2.0.0+3
   
   group_radio_button: ^1.2.0
+  date_picker_timeline: ^1.2.5
+  flutter_stripe: ^9.4.0
+  # zego_uikit_prebuilt_call: ^3.14.0
+  file_picker: ^5.5.0 
 
 dev_dependencies:
 

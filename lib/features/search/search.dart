@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../core/constant/appcolor.dart';
 import '../../core/shared_widgets/custom_textfield.dart';
-import '../dashboard/screen/tab/favourite_screen.dart';
+import '../dashboard/widget/tab/favourite_screen.dart';
 import '../dashboard/widget/dashboard_banner.dart';
 
 class SearchScreen extends StatelessWidget {
