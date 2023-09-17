@@ -22,8 +22,9 @@ class FavouriteScreen extends StatelessWidget {
       ),
       body: ListView.separated(
           itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: buildFvouriteCard(context),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('')
+              // buildFvouriteCard(context),
               ),
           separatorBuilder: (_, __) => SizedBox(
                 height: 18.h,
