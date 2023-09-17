@@ -11,22 +11,30 @@ class FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildFeatureCard(context,
-            icon: MdiIcons.doctor, text: "Doctor", ontap: () {}),
-        _buildFeatureCard(context, icon: MdiIcons.calendar, text: "Appointment",
-            ontap: () {
-          //  Get.to(() => AppoinmentScreen());
-        }),
-        _buildFeatureCard(context,
-            icon: MdiIcons.prescription, text: "Prescription", ontap: () {}),
-        _buildFeatureCard(context,
-            icon: MdiIcons.medicalBag, text: "Medicine", ontap: () {}),
-        _buildFeatureCard(context,
-            icon: MdiIcons.calendar, text: "Treatment", ontap: () {}),
-      ],
+    return SizedBox(
+      height: 55.h,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        scrollDirection: Axis.horizontal,
+        children: [
+          _buildFeatureCard(context,
+              icon: MdiIcons.doctor, text: "Doctor", ontap: () {}),
+          SizedBox(width: 8.w),
+          _buildFeatureCard(context,
+              icon: MdiIcons.calendar, text: "Appointment", ontap: () {
+            //  Get.to(() => AppoinmentScreen());
+          }),
+          SizedBox(width: 8.w),
+          _buildFeatureCard(context,
+              icon: MdiIcons.prescription, text: "Prescription", ontap: () {}),
+          SizedBox(width: 8.w),
+          _buildFeatureCard(context,
+              icon: MdiIcons.medicalBag, text: "Medicine", ontap: () {}),
+          SizedBox(width: 8.w),
+          _buildFeatureCard(context,
+              icon: MdiIcons.calendar, text: "Treatment", ontap: () {}),
+        ],
+      ),
     );
   }
 }

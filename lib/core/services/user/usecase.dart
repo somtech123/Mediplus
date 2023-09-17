@@ -27,14 +27,31 @@ class UserServices {
 
   Future<List<DoctorModel>> getAllDoctors() async {
     try {
-      final snap = await _firestore.collection('doctor').get();
+      final snap = await _firestore.collection("doctor").get();
       final userdata = snap.docs
-          .map((e) => DoctorModel.fromJson(e as Map<String, dynamic>))
+          .map((DocumentSnapshot<Map<String, dynamic>> e) =>
+              DoctorModel.fromJson(e.data()!))
           .toList();
+      debugPrint(userdata.toString());
       return userdata;
     } catch (e) {
       return [];
     }
+  }
+
+  Future<List<DoctorModel>> searchDoctor(String query) async {
+    var snap = await _firestore
+        .collection('doctor')
+        .where('firstName', isGreaterThanOrEqualTo: query)
+        .where('firstName', isLessThan: query + 'z')
+        .get();
+    final userdata = snap.docs
+        .map((DocumentSnapshot<Map<String, dynamic>> e) =>
+            DoctorModel.fromJson(e.data()!))
+        .toList();
+    debugPrint(userdata.toString());
+    return userdata;
+    // return tb;
   }
 
   Future<String> updateUserProfile(UserModel payload) async {

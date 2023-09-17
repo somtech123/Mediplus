@@ -36,6 +36,8 @@ dependencies:
     sdk: flutter
   flutter_event_calendar: ^1.0.0
   #flutter_icons: ^1.1.0
+  
+  shared_preferences: ^2.0.12
   material_design_icons_flutter: 7.0.7296
   flutter_screenutil: ^5.3.1
   flutter_svg: null

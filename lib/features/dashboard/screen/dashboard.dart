@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediplus/core/constant/appcolor.dart';
+import 'package:mediplus/features/dashboard/controller/dashboard_controller.dart';
 import 'package:mediplus/features/dashboard/widget/tab/favourite_screen.dart';
 
 import '../../../core/shared_widgets/custom_textfield.dart';
+import '../../../core/utlis/shimmer_manager.dart';
 import '../widget/dashboard_banner.dart';
 import '../widget/dashboard_card.dart';
 import '../widget/feature_card.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+  Dashboard({super.key});
+  var ctr = Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,7 @@ class Dashboard extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.h),
+          padding: EdgeInsets.symmetric(horizontal: 15.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -115,22 +118,51 @@ class Dashboard extends StatelessWidget {
                 height: 20.h,
               ),
               DashboardCard(),
-              Text("Available Doctors"),
+              SizedBox(height: 20.h),
+              Text(
+                "Available Doctors",
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
               SizedBox(
                 height: 20.h,
               ),
-              SizedBox(
-                height: 300.h,
-                child: ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => const Padding(
-                    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                    child: DashboardBanner(),
-                  ),
-                  itemCount: 3,
-                  scrollDirection: Axis.horizontal,
-                ),
+              FutureBuilder(
+                future: ctr.getAllDoctors(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return SizedBox(
+                      child: ShimmerManager.sectionShimmer(context),
+                      height: 200.h,
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        snapshot.error.toString(),
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    return SizedBox(
+                      height: 280.h,
+                      child: ListView.builder(
+                        physics: const ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          child: DashboardBanner(
+                            user: snapshot.data![index],
+                          ),
+                        ),
+                        itemCount: snapshot.data!.length,
+                        scrollDirection: Axis.horizontal,
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
               ),
             ],
           ),
