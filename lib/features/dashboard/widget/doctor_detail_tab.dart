@@ -85,11 +85,11 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
                   DocInfo(),
                 ],
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  DocExperience(),
+                  DocExperience(doc: ctr.doc),
                 ],
               ),
               const Column(

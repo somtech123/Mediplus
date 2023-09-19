@@ -27,8 +27,8 @@ class DocInfo extends StatelessWidget {
                 color: AppColor.blackColor,
                 fontWeight: FontWeight.w800),
           ),
-          const ExpandableText(
-            'This is a long text that can be expanded to show more. Click "See More" to expand and collapse the text as needed.',
+          ExpandableText(
+            '${ctr.doc.bio}',
             expandText: 'See More',
             collapseText: 'See Less',
             maxLines: 3,
@@ -36,7 +36,7 @@ class DocInfo extends StatelessWidget {
           SizedBox(height: 20.h),
           BorderButton(
             ontap: () {
-              Get.to(() => AppoinmentScreen(), arguments: ctr.bodyBytes);
+              Get.to(() => AppoinmentScreen(), arguments: ctr.doc);
             },
             text: 'Book Appointment',
           )

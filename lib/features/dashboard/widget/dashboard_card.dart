@@ -60,7 +60,8 @@ class DashboardCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10.h),
                     child: CustomPgeView(
                         ontap: () {
-                          Get.to(() => DoctorDetailPage());
+                          Get.to(() => DoctorDetailPage(),
+                              arguments: user[index]);
                         },
                         user: user[index]
                         // snapshot.data![index],
@@ -85,67 +86,70 @@ class CustomPgeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 180.h,
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColor.greyColor, width: 2),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
-      ),
-      child: Stack(
-        children: [
-          Container(
-            height: 130.h,
-            width: 170.w,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(13),
-                topRight: Radius.circular(13),
-                bottomRight: Radius.circular(40),
-              ),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    user.photo ?? StringConstants.dummyProfilePicture),
-              ),
-            ),
+    return GestureDetector(
+      onTap: ontap,
+      child: Container(
+        height: 180.h,
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColor.greyColor, width: 2),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
           ),
-          Positioned(
-            bottom: 5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 10.h,
+        ),
+        child: Stack(
+          children: [
+            Container(
+              height: 130.h,
+              width: 170.w,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(13),
+                  topRight: Radius.circular(13),
+                  bottomRight: Radius.circular(40),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    "${user.firstname} ${user.lastname}",
-                    maxLines: 2,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      user.photo ?? StringConstants.dummyProfilePicture),
                 ),
-                SizedBox(height: 5.h),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    "${user.specialist}",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                  ),
-                )
-              ],
+              ),
             ),
-          )
-        ],
+            Positioned(
+              bottom: 5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      "${user.firstname} ${user.lastname}",
+                      maxLines: 2,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 15, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  SizedBox(height: 5.h),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      "${user.specialist}",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

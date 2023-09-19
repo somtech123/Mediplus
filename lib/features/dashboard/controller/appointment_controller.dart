@@ -1,58 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mediplus/core/services/user/model/doctor_model.dart';
 
 import '../../../core/utlis/time_model.dart';
 
 class AppointmentController extends GetxController {
-  Rx<Uint8List> imageBytes = Get.arguments;
+  DoctorModel doc = Get.arguments;
 
-  RxBool isSelected = false.obs;
-
-  RxList<TimeModel> morningSlot = <TimeModel>[].obs;
-
-  RxList<TimeModel> noonSlot = <TimeModel>[].obs;
-
-  RxList<TimeModel> nightSlot = <TimeModel>[].obs;
+  RxList<TimeOfDay> selectedDates = <TimeOfDay>[].obs;
 
   DateTime currentDate = DateTime.now();
-
-  RxInt morningIndex = 0.obs;
-
-  RxInt noonIndex = 0.obs;
-
-  RxInt nightIndex = 0.obs;
-
-  initialize() {
-    morningSlot.value = TimeSlots.morningSlot;
-    noonSlot.value = TimeSlots.noonSlot;
-    nightSlot.value = TimeSlots.nightSlot;
-  }
-
-  selectNight(int index) {
-    nightIndex.value = index;
-    update();
-  }
-
-  selectNoon(int index) {
-    noonIndex.value = index;
-    update();
-  }
-
-  selectTime(int index) {
-    morningIndex.value = index;
-    update();
-  }
 
   String getTime({required TimeOfDay time}) {
     DateTime dateTime = time.toDateTime(currentDate).toLocal();
     return DateFormat('h:mm a').format(dateTime);
   }
 
+  void onTimeSelected(TimeOfDay date) {
+    selectedDates.clear();
+
+    selectedDates.add(date);
+
+    debugPrint(selectedDates.length.toString());
+  }
+
+  bool isTimeSelected(TimeOfDay date) {
+    return selectedDates.contains(date);
+  }
+
   @override
   void onReady() {
-    initialize();
+    //  initialize();
     super.onReady();
   }
 }

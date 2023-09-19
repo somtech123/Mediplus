@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constant/appcolor.dart';
+import '../../../../core/services/user/model/doctor_model.dart';
 
+// ignore: must_be_immutable
 class DocExperience extends StatelessWidget {
-  const DocExperience({super.key});
+  DocExperience({super.key, required this.doc});
+  DoctorModel doc;
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +17,13 @@ class DocExperience extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _headingText(context, text: 'st hokin hosipal'),
+          _headingText(context, text: '${doc.hospital}'),
           SizedBox(height: 10.h),
           _headingText(context, text: 'Designation'),
-          _subheadingText(context, text: 'residential medical doctor'),
+          _subheadingText(context, text: '${doc.designation}'),
           SizedBox(height: 10.h),
           _headingText(context, text: 'Department'),
-          _subheadingText(context, text: 'Obs'),
+          _subheadingText(context, text: '${doc.department}'),
           SizedBox(height: 10.h),
           _headingText(context, text: 'Employment period'),
           _subheadingText(context, text: '23 of jan 2001'),

@@ -12,15 +12,12 @@ class UserServices {
   Future<UserModel> getUserDetails() async {
     try {
       User currentUser = _auth.currentUser!;
-      debugPrint(
-          '=====================${_auth.currentUser!.uid}===================');
       DocumentSnapshot<Map<String, dynamic>> snap =
           await _firestore.collection("users").doc(currentUser.uid).get();
-      debugPrint('===================${snap.data()}================');
       return UserModel.fromJson(snap.data()!);
     } catch (e) {
       debugPrint(e.toString());
-      debugPrint('-------------empty data------------');
+
       return UserModel();
     }
   }
@@ -32,7 +29,6 @@ class UserServices {
           .map((DocumentSnapshot<Map<String, dynamic>> e) =>
               DoctorModel.fromJson(e.data()!))
           .toList();
-      debugPrint(userdata.toString());
       return userdata;
     } catch (e) {
       return [];
@@ -73,6 +69,12 @@ class UserServices {
       res = e.toString();
       debugPrint(e.toString());
     }
+    return res;
+  }
+
+  Future<String> bookAppointment() async {
+    String res = "Some error occurred";
+    try {} catch (e) {}
     return res;
   }
 }

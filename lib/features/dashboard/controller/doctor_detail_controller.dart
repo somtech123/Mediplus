@@ -2,9 +2,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../core/api/apiclient.dart';
+import '../../../core/services/user/model/doctor_model.dart';
 
 class DoctorDetailController extends GetxController {
   RxBool isLoading = true.obs;
+  DoctorModel doc = Get.arguments;
 
   Rx<Uint8List> bodyBytes = Uint8List(0).obs;
 
@@ -19,7 +21,7 @@ class DoctorDetailController extends GetxController {
 
   @override
   void onReady() {
-    removeImg();
+    // removeImg();
     super.onReady();
   }
 }

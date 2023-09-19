@@ -7,10 +7,10 @@ class CustomTimeContainer extends StatelessWidget {
       {super.key,
       required this.ontap,
       required this.time,
-      required this.isActive});
+      this.isActive = false});
   final Function() ontap;
   final String time;
-  final bool isActive;
+  bool isActive;
 
   @override
   Widget build(BuildContext context) {
