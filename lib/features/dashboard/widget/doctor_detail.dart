@@ -9,6 +9,7 @@ import 'package:mediplus/features/dashboard/widget/doctor_detail_tab.dart';
 import '../../../core/constant/string_constant.dart';
 import '../../../core/shared_widgets/primary_button.dart';
 import '../../../core/utlis/shimmer_manager.dart';
+import '../../../core/utlis/utlis.dart';
 import '../controller/doctor_detail_controller.dart';
 
 // ignore: must_be_immutable
@@ -30,15 +31,7 @@ class DoctorDetailPage extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.w500)),
         ),
-        body:
-            // Obx(() => ctr.isLoading.value
-            //     ? Container(
-            //         child: ShimmerManager.sectionShimmer(context),
-            //         height: 100.h,
-            //         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            //       )
-            //     :
-            SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.h),
             child: Column(
@@ -46,10 +39,10 @@ class DoctorDetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 150.h,
+                  height: 100.h,
                   width: Get.width,
                   decoration: BoxDecoration(
-                    //color: AppColor.greyWithOPacity,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.all(
                       Radius.circular(15.dm),
                     ),
@@ -101,9 +94,13 @@ class DoctorDetailPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _greyContainer(context,
-                        heading: 'Patient', subHeading: '45.7k'),
+                        heading: 'Patient',
+                        subHeading: Utils.formatNumber(
+                            int.parse('${ctr.doc.patient}'))),
                     _greyContainer(context,
-                        heading: 'Experiences', subHeading: '7 years'),
+                        heading: 'Experiences',
+                        subHeading:
+                            '${ctr.calculateYear(ctr.doc.experience!)} years'),
                     _greyContainer(context,
                         heading: 'Reviews', subHeading: '6.0k')
                   ],

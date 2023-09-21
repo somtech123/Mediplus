@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DoctorModel {
@@ -10,13 +11,14 @@ class DoctorModel {
       designation,
       rating,
       specialist,
-      experience,
       fee,
       bio,
+      patient,
       employmentPeriod,
       hospital,
       photo;
   List<TimePeiod>? morningSlot, noonSlot, nightSlot;
+  DateTime? experience;
 
   DoctorModel(
       {this.id,
@@ -24,6 +26,7 @@ class DoctorModel {
       this.lastname,
       this.phone,
       this.email,
+      this.patient,
       this.department,
       this.designation,
       this.rating,
@@ -48,9 +51,11 @@ class DoctorModel {
         department: json['department'],
         designation: json['designation'],
         specialist: json['specialtist'],
-        experience: json['experience'],
+        experience: (json['experience'] as Timestamp).toDate(),
+        // json['experience'] as Timestamp,
         rating: json['rating'],
         bio: json['bio'],
+        patient: json['patient'],
         photo: json["profileImage"],
         fee: json['consultantancy fee'],
         employmentPeriod: json['employment period'],
@@ -74,9 +79,10 @@ class DoctorModel {
         'department': department,
         'designation': designation,
         'specialtist': specialist,
-        'experience': experience,
+        'experience': experience!.toIso8601String(),
         'rating': rating,
         'bio': bio,
+        'patient': patient,
         'hospital': hospital,
         "profileImage": photo,
         'consultantancy fee': fee,

@@ -19,6 +19,11 @@ class DoctorDetailController extends GetxController {
     return res;
   }
 
+  int calculateYear(DateTime date) {
+    final from = DateTime.now();
+    return from.year - date.year;
+  }
+
   @override
   void onReady() {
     // removeImg();

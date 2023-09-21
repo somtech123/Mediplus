@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediplus/core/shared_widgets/primary_button.dart';
-import 'package:mediplus/features/dashboard/screen/patient_info.dart';
 
 import '../../../core/constant/appcolor.dart';
 import '../../../core/constant/string_constant.dart';
@@ -100,23 +99,19 @@ class AppoinmentScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  DateFormat('MMMM').format(ctr.currentDate),
+                  DateFormat('MMMM').format(DateTime.now()),
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
                       .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 20.h),
-                DatePicker(
-                  DateTime.now(),
-                  height: 80.h,
-                  initialSelectedDate: DateTime.now(),
-                  selectionColor: AppColor.primaryColor,
-                  selectedTextColor: Colors.white,
-                  onDateChange: (date) {
-                    // New date selected
-                  },
-                ),
+                DatePicker(DateTime.now(),
+                    height: 80.h,
+                    initialSelectedDate: DateTime.now(),
+                    selectionColor: AppColor.primaryColor,
+                    selectedTextColor: Colors.white,
+                    onDateChange: (date) => ctr.selectDate(date)),
                 SizedBox(height: 20.h),
                 Text(
                   'Morning Slots',
@@ -205,7 +200,7 @@ class AppoinmentScreen extends StatelessWidget {
                 PrimaryButton(
                     label: 'Proceed',
                     onPressed: () {
-                      Get.to(() => PatientInfoScreen());
+                      ctr.validate();
                     }),
                 SizedBox(height: 50.h),
               ],

@@ -1,6 +1,7 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/constant/appcolor.dart';
 import '../../../../core/services/user/model/doctor_model.dart';
@@ -26,15 +27,16 @@ class DocExperience extends StatelessWidget {
           _subheadingText(context, text: '${doc.department}'),
           SizedBox(height: 10.h),
           _headingText(context, text: 'Employment period'),
-          _subheadingText(context, text: '23 of jan 2001'),
-          SizedBox(height: 10.h),
-          _headingText(context, text: 'Job Description'),
-          const ExpandableText(
-            'This is a long text that can be expanded to show more. Click "See More" to expand and collapse the text as needed.',
-            expandText: 'See More',
-            collapseText: 'See Less',
-            maxLines: 3,
-          ),
+          _subheadingText(context,
+              text: DateFormat('d of MMM y').format(doc.experience!)),
+          // SizedBox(height: 10.h),
+          // _headingText(context, text: 'Job Description'),
+          // const ExpandableText(
+          //   'This is a long text that can be expanded to show more. Click "See More" to expand and collapse the text as needed.',
+          //   expandText: 'See More',
+          //   collapseText: 'See Less',
+          //   maxLines: 3,
+          // ),
           SizedBox(height: 20.h),
         ],
       ),

@@ -5,6 +5,10 @@ import 'package:mediplus/core/constant/appcolor.dart';
 import 'package:mediplus/core/shared_widgets/primary_button.dart';
 import 'package:mediplus/features/dashboard/controller/payment_controller.dart';
 
+import '../../../core/services/user/model/service_model.dart';
+import '../../../core/utlis/shimmer_manager.dart';
+import '../../../core/utlis/utlis.dart';
+
 // ignore: must_be_immutable
 class PaymentScreen extends StatelessWidget {
   PaymentScreen({super.key});
@@ -15,7 +19,7 @@ class PaymentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.secondary,
-        iconTheme: const IconThemeData(color: AppColor.blackColor),
+        //iconTheme: const IconThemeData(color: AppColor.blackColor),
         title: const Text(
           "Check Out",
           style: TextStyle(color: AppColor.blackColor, fontSize: 20),
@@ -23,39 +27,67 @@ class PaymentScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Total:\t',
-                    style: Theme.of(context).textTheme.button!.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                        color: AppColor.greyColor),
-                  ),
-                  Text('6000')
-                ],
-              ),
-              SizedBox(height: 20.h),
-              _buildExpansionContainer(context,
-                  paymentChannel: 'Flutterwave',
-                  text:
-                      'You are about to make a payment of N600 via Flutterwave',
-                  ontap: () {}),
-              SizedBox(height: 20.h),
-              _buildExpansionContainer(context,
-                  paymentChannel: 'Stripe',
-                  text: 'You are about to make a payment of N600 via Stripe',
-                  ontap: () {
-                ctr.makePayment(amount: '6', currency: 'USD');
-              }),
-            ],
-          ),
+      body: WillPopScope(
+        onWillPop: () => Future.value(false),
+        child: FutureBuilder(
+          future: ctr.getServiceCharge(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SizedBox(
+                child: ShimmerManager.sectionShimmer(context),
+                height: 200.h,
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  snapshot.error.toString(),
+                ),
+              );
+            } else if (snapshot.hasData) {
+              return _checkOut(context, serviceCharge: snapshot.data!);
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _checkOut(BuildContext context,
+      {required ServiceChargeModel serviceCharge}) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Total:\t',
+                  style: Theme.of(context).textTheme.button!.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      color: AppColor.greyColor),
+                ),
+                Text(
+                    '${currencyFormat.format(double.parse('${serviceCharge.servicesCharge}'))}')
+              ],
+            ),
+            SizedBox(height: 20.h),
+            _buildExpansionContainer(context,
+                paymentChannel: 'Flutterwave',
+                text: 'You are about to make a payment of N600 via Flutterwave',
+                ontap: () {}),
+            SizedBox(height: 20.h),
+            _buildExpansionContainer(context,
+                paymentChannel: 'Stripe',
+                text: 'You are about to make a payment of N600 via Stripe',
+                ontap: () {
+              ctr.makePayment(amount: '600.00', currency: 'USD');
+            }),
+          ],
         ),
       ),
     );

@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mediplus/core/services/user/model/doctor_model.dart';
+import 'package:mediplus/env/private_key.dart';
 
 import '../authentication/model/user_model.dart';
+import '../strorage_method.dart';
+import 'model/service_model.dart';
 
 class UserServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -20,6 +26,15 @@ class UserServices {
 
       return UserModel();
     }
+  }
+
+  Future<ServiceChargeModel> getServiceCharge() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snap =
+          await _firestore.collection('mediplus').doc(PrivateKey.docId).get();
+      return ServiceChargeModel.fromJson(snap.data()!);
+    } catch (e) {}
+    return ServiceChargeModel();
   }
 
   Future<List<DoctorModel>> getAllDoctors() async {
@@ -72,9 +87,9 @@ class UserServices {
     return res;
   }
 
-  Future<String> bookAppointment() async {
-    String res = "Some error occurred";
-    try {} catch (e) {}
-    return res;
+  Future<List<String>> uploadFiles(List<File> file) async {
+    var fileUrls = await Future.wait(
+        file.map((data) => StorageMethod().uploadFiles(data)));
+    return fileUrls;
   }
 }
