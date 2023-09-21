@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +27,23 @@ class StorageMethod {
     } catch (e) {
       debugPrint(e.toString());
     }
+    return imageUrl;
+  }
+
+  Future<String> uploadFiles(File file) async {
+    String imageUrl = '';
+    try {
+      Reference ref = _storage
+          .ref()
+          .child('report/${_auth.currentUser!.uid}')
+          .child(_auth.currentUser!.uid);
+
+      UploadTask uploadTask = ref.putFile(file);
+
+      TaskSnapshot snap = await uploadTask;
+
+      imageUrl = await snap.ref.getDownloadURL();
+    } catch (e) {}
     return imageUrl;
   }
 }

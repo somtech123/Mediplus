@@ -1,14 +1,17 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:mediplus/core/services/user/usecase.dart';
 
+import '../../../core/services/user/model/service_model.dart';
 import '../../../core/shared_widgets/alert_widget.dart';
 import '../../../core/shared_widgets/snack_bar.dart';
 import '../../../env/private_key.dart';
 
 class PaymentController extends GetxController {
+  final UserServices _userServices = UserServices();
+
   Map<String, dynamic>? paymentIntentData;
 
   Future<void> makePayment(
@@ -30,7 +33,7 @@ class PaymentController extends GetxController {
       }
     } catch (e, s) {
       print('exception:$e$s');
-    } 
+    }
   }
 
   displayPaymentSheet() async {
@@ -78,5 +81,9 @@ class PaymentController extends GetxController {
   calculateAmount(String amount) {
     final a = (int.parse(amount)) * 100;
     return a.toString();
+  }
+
+  Future<ServiceChargeModel> getServiceCharge() async {
+    return await _userServices.getServiceCharge();
   }
 }

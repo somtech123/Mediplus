@@ -5,9 +5,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediplus/core/shared_widgets/primary_button.dart';
-import 'package:mediplus/features/dashboard/screen/patient_info.dart';
 
 import '../../../core/constant/appcolor.dart';
+import '../../../core/constant/string_constant.dart';
+import '../../../core/utlis/utlis.dart';
 import '../controller/appointment_controller.dart';
 import '../widget/custom_container.dart';
 
@@ -38,10 +39,11 @@ class AppoinmentScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 150.h,
+                  height: 100.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColor.greyWithOPacity,
+                    color: Colors.transparent,
+                    // AppColor.greyWithOPacity,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
@@ -53,7 +55,8 @@ class AppoinmentScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.contain,
-                            image: MemoryImage(ctr.imageBytes.value),
+                            image: NetworkImage(ctr.doc.photo ??
+                                StringConstants.dummyProfilePicture),
                           ),
                         ),
                       ),
@@ -79,7 +82,7 @@ class AppoinmentScreen extends StatelessWidget {
                                 color: AppColor.primaryColor,
                               ),
                               Text(
-                                " 67, 00",
+                                " ${currencyFormat.format(double.parse(ctr.doc.fee!))}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -96,23 +99,19 @@ class AppoinmentScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  DateFormat('MMMM').format(ctr.currentDate),
+                  DateFormat('MMMM').format(DateTime.now()),
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
                       .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 20.h),
-                DatePicker(
-                  DateTime.now(),
-                  height: 100,
-                  initialSelectedDate: DateTime.now(),
-                  selectionColor: AppColor.primaryColor,
-                  selectedTextColor: Colors.white,
-                  onDateChange: (date) {
-                    // New date selected
-                  },
-                ),
+                DatePicker(DateTime.now(),
+                    height: 80.h,
+                    initialSelectedDate: DateTime.now(),
+                    selectionColor: AppColor.primaryColor,
+                    selectedTextColor: Colors.white,
+                    onDateChange: (date) => ctr.selectDate(date)),
                 SizedBox(height: 20.h),
                 Text(
                   'Morning Slots',
@@ -123,17 +122,22 @@ class AppoinmentScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 Wrap(
-                  children: List.generate(ctr.morningSlot.length, (index) {
-                    String time =
-                        ctr.getTime(time: ctr.morningSlot[index].currentTime);
+                  children: List.generate(ctr.doc.morningSlot!.length, (index) {
+                    String time = ctr.getTime(
+                        time: TimeOfDay(
+                            hour: ctr.doc.morningSlot![index].hour!,
+                            minute: ctr.doc.morningSlot![index].minutes!));
+                    final TimeOfDay _selectedTime = TimeOfDay(
+                        hour: ctr.doc.morningSlot![index].hour!,
+                        minute: ctr.doc.morningSlot![index].minutes!);
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTimeContainer(
                         ontap: () {
-                          ctr.selectTime(index);
+                          ctr.onTimeSelected(_selectedTime);
                         },
                         time: time,
-                        isActive: index == ctr.morningIndex.value,
+                        isActive: ctr.isTimeSelected(_selectedTime),
                       ),
                     );
                   }),
@@ -148,16 +152,20 @@ class AppoinmentScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 Wrap(
-                  children: List.generate(ctr.noonSlot.length, (index) {
-                    String time =
-                        ctr.getTime(time: ctr.noonSlot[index].currentTime);
+                  children: List.generate(ctr.doc.noonSlot!.length, (index) {
+                    String time = ctr.getTime(
+                        time: TimeOfDay(
+                            hour: ctr.doc.noonSlot![index].hour!,
+                            minute: ctr.doc.noonSlot![index].minutes!));
+                    TimeOfDay _selectedTime = TimeOfDay(
+                        hour: ctr.doc.noonSlot![index].hour!,
+                        minute: ctr.doc.noonSlot![index].minutes!);
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTimeContainer(
-                        ontap: () => ctr.selectNoon(index),
-                        time: time,
-                        isActive: index == ctr.nightIndex.value,
-                      ),
+                          ontap: () => ctr.onTimeSelected(_selectedTime),
+                          time: time,
+                          isActive: ctr.isTimeSelected(_selectedTime)),
                     );
                   }),
                 ),
@@ -171,16 +179,20 @@ class AppoinmentScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 Wrap(
-                  children: List.generate(ctr.nightSlot.length, (index) {
-                    String time =
-                        ctr.getTime(time: ctr.nightSlot[index].currentTime);
+                  children: List.generate(ctr.doc.nightSlot!.length, (index) {
+                    String time = ctr.getTime(
+                        time: TimeOfDay(
+                            hour: ctr.doc.nightSlot![index].hour!,
+                            minute: ctr.doc.nightSlot![index].minutes!));
+                    TimeOfDay _time = TimeOfDay(
+                        hour: ctr.doc.nightSlot![index].hour!,
+                        minute: ctr.doc.nightSlot![index].minutes!);
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTimeContainer(
-                        ontap: () => ctr.selectNight(index),
-                        time: time,
-                        isActive: index == ctr.nightIndex.value,
-                      ),
+                          ontap: () => ctr.onTimeSelected(_time),
+                          time: time,
+                          isActive: ctr.isTimeSelected(_time)),
                     );
                   }),
                 ),
@@ -188,7 +200,7 @@ class AppoinmentScreen extends StatelessWidget {
                 PrimaryButton(
                     label: 'Proceed',
                     onPressed: () {
-                      Get.to(() => PatientInfoScreen());
+                      ctr.validate();
                     }),
                 SizedBox(height: 50.h),
               ],

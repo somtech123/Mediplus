@@ -27,7 +27,7 @@ class CustomTab extends StatelessWidget {
       ),
       child: Text(text,
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontSize: 15,
+                fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: index == tabIndex
                     ? AppColor.secondary

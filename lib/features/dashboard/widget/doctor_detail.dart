@@ -6,8 +6,10 @@ import 'package:get/get.dart';
 import 'package:mediplus/core/constant/appcolor.dart';
 import 'package:mediplus/features/dashboard/widget/doctor_detail_tab.dart';
 
+import '../../../core/constant/string_constant.dart';
 import '../../../core/shared_widgets/primary_button.dart';
 import '../../../core/utlis/shimmer_manager.dart';
+import '../../../core/utlis/utlis.dart';
 import '../controller/doctor_detail_controller.dart';
 
 // ignore: must_be_immutable
@@ -18,118 +20,112 @@ class DoctorDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: AppColor.secondary,
-        iconTheme: const IconThemeData(color: AppColor.blackColor),
-        title: Text("Doctor Profile",
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: AppColor.blackColor,
-                fontSize: 15,
-                fontWeight: FontWeight.w500)),
-        actions: [],
-      ),
-      body: Obx(() => ctr.isLoading.value
-          ? Container(
-              child: ShimmerManager.sectionShimmer(context),
-              height: 100.h,
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            )
-          : SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.h),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 150.h,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                        color: AppColor.greyWithOPacity,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15.dm),
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: AppColor.secondary,
+          iconTheme: const IconThemeData(color: AppColor.blackColor),
+          title: Text("Doctor Profile",
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: AppColor.blackColor,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500)),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.h),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 100.h,
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15.dm),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 60.w * 2,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image: NetworkImage(ctr.doc.photo ??
+                                StringConstants.dummyProfilePicture),
+                          ),
                         ),
                       ),
-                      child: Row(
+                      SizedBox(width: 10.w),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: 60.w * 2,
-                            height: double.infinity,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: MemoryImage(ctr.bodyBytes.value),
-                              ),
-                            ),
+                          Text(
+                            "Doctor ${ctr.doc.firstname} ${ctr.doc.lastname}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20,
+                                    color: AppColor.blackColor),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Doctor John abbas",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20,
-                                        color: AppColor.blackColor),
-                              ),
-                              Text('surgon'),
-                              Row(
-                                children: [
-                                  _ratingBar(context, rating: 5),
-                                  Text(
-                                    "(5)",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(color: AppColor.rating),
-                                  )
-                                ],
-                              )
-                            ],
-                          )
+                          Text(
+                            '${ctr.doc.specialist}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(fontSize: 14),
+                          ),
+                          _ratingBar(context,
+                              rating: double.parse('${ctr.doc.rating}')),
                         ],
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-                    //  _buildDoctorInfo(context),
-                    SizedBox(height: 20.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _greyContainer(context,
-                            heading: 'Patient', subHeading: '45.7k'),
-                        _greyContainer(context,
-                            heading: 'Experiences', subHeading: '7 years'),
-                        _greyContainer(context,
-                            heading: 'Reviews', subHeading: '6.0k')
-                      ],
-                    ),
-                    SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GreyButton(
-                            ontap: () {}, text: 'Audio call', icon: Icons.call),
-                        GreyButton(
-                            ontap: () {},
-                            text: 'video call',
-                            icon: Icons.video_call),
-                        GreyButton(
-                            ontap: () {}, text: 'message', icon: Icons.message),
-                      ],
-                    ),
-                    const DoctorDetailTabWidget()
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _greyContainer(context,
+                        heading: 'Patient',
+                        subHeading: Utils.formatNumber(
+                            int.parse('${ctr.doc.patient}'))),
+                    _greyContainer(context,
+                        heading: 'Experiences',
+                        subHeading:
+                            '${ctr.calculateYear(ctr.doc.experience!)} years'),
+                    _greyContainer(context,
+                        heading: 'Reviews', subHeading: '6.0k')
                   ],
                 ),
-              ),
-            )),
-    );
+                SizedBox(height: 10.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GreyButton(
+                        ontap: () {}, text: 'Audio call', icon: Icons.call),
+                    GreyButton(
+                        ontap: () {},
+                        text: 'video call',
+                        icon: Icons.video_call),
+                    GreyButton(
+                        ontap: () {}, text: 'message', icon: Icons.message),
+                  ],
+                ),
+                const DoctorDetailTabWidget()
+              ],
+            ),
+          ),
+        )
+        //),
+        );
   }
 
   Widget _buildDoctorInfo(BuildContext context) {

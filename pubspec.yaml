@@ -57,6 +57,7 @@ dependencies:
   firebase_core: ^2.3.0
   firebase_messaging:
   firebase_auth: ^4.9.0
+  firebase_database: ^10.2.6
   google_sign_in: ^6.1.5
   flutter_facebook_auth: ^6.0.1
   shimmer: ^3.0.0

@@ -10,6 +10,7 @@ import 'package:mediplus/core/shared_widgets/primary_button.dart';
 import 'package:mediplus/features/dashboard/controller/patient_info_controller.dart';
 import 'package:mediplus/features/dashboard/screen/payment_screen.dart';
 
+// ignore: must_be_immutable
 class PatientInfoScreen extends StatelessWidget {
   PatientInfoScreen({super.key});
 
@@ -29,55 +30,67 @@ class PatientInfoScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 20.h),
-            AppTextField(
-              labelText: 'Patient name',
-              min: true,
-            ),
-            InkWell(
-              // onTap: () => ctr.selectDate(context),
-              child: AbsorbPointer(
-                absorbing: true,
-                child: AppTextField(
-                  labelText: 'Date of birth',
-                  min: true,
-                  // controller: ctr.dateController,
-                  // errorMessage: ctr.dateErrorText.value,
-                  // onChanged: (p0) => ctr.clearError(ctr.dateErrorText),
-                  suffix: const Icon(Icons.calendar_month,
-                      size: 16, color: AppColor.blackColor),
+        child: Obx(
+          () => Column(
+            children: [
+              SizedBox(height: 20.h),
+              AppTextField(
+                labelText: 'Patient name',
+                min: true,
+                controller: ctr.nameController,
+                errorMessage: ctr.nameErrorText.value,
+                onChanged: (p) => ctr.clearError(ctr.nameErrorText),
+              ),
+              InkWell(
+                onTap: () => ctr.selectDate(context),
+                child: AbsorbPointer(
+                  absorbing: true,
+                  child: AppTextField(
+                    labelText: 'Date of birth',
+                    min: true,
+                    controller: ctr.dateController,
+                    errorMessage: ctr.dateErrorText.value,
+                    onChanged: (p0) => ctr.clearError(ctr.dateErrorText),
+                    suffix: const Icon(Icons.calendar_month,
+                        size: 16, color: AppColor.blackColor),
+                  ),
                 ),
               ),
-            ),
-            AppTextField(
-              labelText: 'Weight (KG)',
-              min: true,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-              child: CustomBorderTextField(
-                maxLines: 10,
-                hintText: 'Briefy describe your problem',
+              AppTextField(
+                labelText: 'Weight (KG)',
+                min: true,
+                controller: ctr.weightController,
+                errorMessage: ctr.weightErrorText.value,
+                onChanged: (p0) => ctr.clearError(ctr.weightErrorText),
+                textInputType: TextInputType.number,
               ),
-            ),
-            SizedBox(height: 10.h),
-            _dottedContainer(
-              context,
-              ontap: () => ctr.pickMultipleFile(),
-            ),
-            SizedBox(height: 20.h),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-              child: PrimaryButton(
-                  label: 'Proceed',
-                  onPressed: () {
-                    Get.to(() => PaymentScreen());
-                  }),
-            ),
-            SizedBox(height: 50.h),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+                child: CustomBorderTextField(
+                  maxLines: 10,
+                  hintText: 'Briefy describe your problem',
+                  controller: ctr.descriptionController,
+                  errorMessage: ctr.descriptionErrorText.value,
+                  onChanged: (p0) => ctr.clearError(ctr.descriptionErrorText),
+                ),
+              ),
+              SizedBox(height: 10.h),
+              _dottedContainer(
+                context,
+                ontap: () => ctr.pickMultipleFile(),
+              ),
+              SizedBox(height: 20.h),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+                child: PrimaryButton(
+                    label: 'Proceed',
+                    onPressed: () {
+                      ctr.validateInput();
+                    }),
+              ),
+              SizedBox(height: 50.h),
+            ],
+          ),
         ),
       ),
     );
@@ -100,46 +113,43 @@ class PatientInfoScreen extends StatelessWidget {
                   left: 20, right: 10, bottom: 20, top: 10),
               child: Stack(
                 children: [
-                  Obx(
-                    () => ctr.file.isEmpty
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                    text: "Attach report and previous",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColor.greyColor),
-                                    children: const [
-                                      TextSpan(text: "\nPrescription"),
-                                    ]),
-                              ),
-                              SizedBox(height: 15.h),
-                              Text(
-                                StringConstants.attachmentString,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColor.greyColor),
-                              )
-                            ],
-                          )
-                        : Column(
-                            children: List.generate(
-                              ctr.file.length,
-                              (index) => Text(ctr.file[index].name),
+                  Obx(() => ctr.file.isEmpty
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                  text: "Attach report and previous",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColor.greyColor),
+                                  children: const [
+                                    TextSpan(text: "\nPrescription"),
+                                  ]),
                             ),
-                          ),
-                  ),
+                            SizedBox(height: 15.h),
+                            Text(
+                              StringConstants.attachmentString,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.greyColor),
+                            )
+                          ],
+                        )
+                      : ListView.builder(
+                          itemBuilder: (context, index) =>
+                              Text(ctr.file[index].name),
+                          itemCount: ctr.file.length,
+                        )),
                   const Positioned(
                     right: 5,
                     child: Icon(

@@ -11,6 +11,7 @@ import '../widget/dashboard_banner.dart';
 import '../widget/dashboard_card.dart';
 import '../widget/feature_card.dart';
 
+// ignore: must_be_immutable
 class Dashboard extends StatelessWidget {
   Dashboard({super.key});
   var ctr = Get.put(DashboardController());
