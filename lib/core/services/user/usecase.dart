@@ -4,16 +4,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mediplus/core/services/user/model/appointment_model.dart';
 import 'package:mediplus/core/services/user/model/doctor_model.dart';
+import 'package:mediplus/core/services/user/model/favourite_model.dart';
 import 'package:mediplus/env/private_key.dart';
 
 import '../authentication/model/user_model.dart';
+import '../chat/model/chat_user_model.dart';
 import '../strorage_method.dart';
 import 'model/service_model.dart';
 
 class UserServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  final CollectionReference _userCollection = _firestore.collection("users");
+
+  final CollectionReference _docCollection = _firestore.collection("doctor");
+  static final FirebaseDatabase _db = FirebaseDatabase.instance;
 
   Future<UserModel> getUserDetails() async {
     try {
@@ -25,6 +33,33 @@ class UserServices {
       debugPrint(e.toString());
 
       return UserModel();
+    }
+  }
+
+  Future<ChatUserModel> getUserDetailsById(id) async {
+    debugPrint("getting user from firebase $id");
+    try {
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await _firestore.collection("doctor").doc(id).get();
+      debugPrint("getting document from firebase ${documentSnapshot.data()!}");
+      var user = ChatUserModel.fromMap(documentSnapshot.data()!);
+      debugPrint('user from firebade is============== ${user.userId}');
+      return user;
+    } catch (e) {
+      debugPrint("$e");
+      return ChatUserModel();
+    }
+  }
+
+  Future<DoctorModel> getDoctorById(id) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await _firestore.collection("doctor").doc(id).get();
+      var user = DoctorModel.fromJson(documentSnapshot.data()!);
+      return user;
+    } catch (e) {
+      debugPrint("$e");
+      return DoctorModel();
     }
   }
 
@@ -92,4 +127,187 @@ class UserServices {
         file.map((data) => StorageMethod().uploadFiles(data)));
     return fileUrls;
   }
+
+  DocumentReference getFavouriteDocument({String? of, String? forContact}) =>
+      _userCollection.doc(of).collection('favourite').doc(forContact);
+
+  Stream<DocumentSnapshot> fetchFavourite(
+      {String? userId, String? receiverId}) {
+    final docReference =
+        _userCollection.doc(userId).collection('favourite').doc(receiverId);
+    return docReference.snapshots().map((snapshot) {
+      if (snapshot.exists) {
+        return snapshot;
+      } else {
+        FavouriteModel _favourite = FavouriteModel(
+            isfavourite: false,
+            receiverID: receiverId,
+            addedOn: Timestamp.now());
+
+        var payload = _favourite.toMap(_favourite);
+        docReference.set(payload);
+        return snapshot;
+      }
+    });
+  }
+
+  toogleFavourite(
+      {String? userId, String? receiverId, bool? isFavourite}) async {
+    FavouriteModel _favourite = FavouriteModel(
+        isfavourite: isFavourite,
+        receiverID: receiverId,
+        addedOn: Timestamp.now());
+
+    var payload = _favourite.toMap(_favourite);
+    await getFavouriteDocument(of: userId, forContact: receiverId).set(payload);
+  }
+
+  Future<void> checkFavourite({
+    required String senderId,
+    required String receiverId,
+  }) async {
+    DocumentSnapshot snapshot =
+        await getFavouriteDocument(of: senderId, forContact: receiverId).get();
+    if (!snapshot.exists) {
+      //does not exits
+      FavouriteModel _favourite = FavouriteModel(
+          isfavourite: false, receiverID: receiverId, addedOn: Timestamp.now());
+
+      var payload = _favourite.toMap(_favourite);
+
+      await getFavouriteDocument(of: senderId, forContact: receiverId)
+          .set(payload);
+    }
+  }
+
+  Stream<QuerySnapshot> fetchallFavourite({String? userId}) => _userCollection
+      .doc(userId)
+      .collection('favourite')
+      .where('isFvourite', isEqualTo: true)
+      .snapshots();
+
+  Future<List<AppointmentModel>> getAppointmentHistory() async {
+    List<AppointmentModel> userData = [];
+    try {
+      var snap = await _db
+          .ref()
+          .child('appointments')
+          .orderByChild('date_created')
+          .once();
+
+      if (snap.snapshot.value != null) {
+        Map<dynamic, dynamic> data =
+            (snap.snapshot.value as Map<dynamic, dynamic>);
+
+        debugPrint(data.toString());
+
+        List<MapEntry<dynamic, dynamic>> sortedEntries = data.entries.toList()
+          ..sort((a, b) {
+            var timestampA = a.value['date_created'];
+            var timestampB = b.value['date_created'];
+            return timestampB.compareTo(timestampA);
+          });
+
+        for (var entry in sortedEntries) {
+          var appointment = AppointmentModel.fromJson(entry.value);
+          userData.add(appointment);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error fetching appointment history: $e');
+    }
+    return userData;
+  }
+
+  Future<List<AppointmentModel>> sortAppointmentBySatus(
+      {required String status}) async {
+    List<AppointmentModel> userData = [];
+    try {
+      var snap = await _db
+          .ref()
+          .child('appointments')
+          .orderByChild('status')
+          .equalTo(status)
+          .once();
+
+      if (snap.snapshot.value != null) {
+        Map<dynamic, dynamic> data =
+            (snap.snapshot.value as Map<dynamic, dynamic>);
+        debugPrint(data.toString());
+
+        List<MapEntry<dynamic, dynamic>> sortedEntries = data.entries.toList()
+          ..sort((a, b) {
+            var timestampA = a.value['date_created'];
+            var timestampB = b.value['date_created'];
+            return timestampB.compareTo(timestampA);
+          });
+
+        for (var entry in sortedEntries) {
+          var appointment = AppointmentModel.fromJson(entry.value);
+          userData.add(appointment);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error fetching completed appointments: $e');
+    }
+    return userData;
+  }
+
+  Future<List<AppointmentModel>> upComingAppointments() async {
+    List<AppointmentModel> userData = [];
+    try {
+      var snap = await _db
+          .ref()
+          .child('appointments')
+          .orderByChild('status')
+          .startAt('completed' + '\uf8ff')
+
+          // .orderByChild('status')
+          // .equalTo('completed')
+          .once();
+
+      if (snap.snapshot.value != null) {
+        Map<dynamic, dynamic> data =
+            (snap.snapshot.value as Map<dynamic, dynamic>);
+        debugPrint(data.toString());
+
+        List<MapEntry<dynamic, dynamic>> sortedEntries = data.entries.toList()
+          ..sort((a, b) {
+            var timestampA = a.value['date_created'];
+            var timestampB = b.value['date_created'];
+            return timestampB.compareTo(timestampA);
+          });
+
+        for (var entry in sortedEntries) {
+          var appointment = AppointmentModel.fromJson(entry.value);
+          userData.add(appointment);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error fetching completed appointments: $e');
+    }
+    return userData;
+  }
+
+  DocumentReference getReviewDocument({String? of, String? by}) =>
+      _docCollection.doc(of).collection('review').doc(by);
+
+  Future<String> sendReview(
+      {String? docId,
+      String? userId,
+      required Map<String, dynamic> payload}) async {
+    String res = "Some error occurred";
+    try {
+      await getReviewDocument(of: docId, by: userId)
+          .set(payload, SetOptions(merge: true));
+      res = 'success';
+    } catch (e) {
+      res = e.toString();
+    }
+
+    return res;
+  }
+
+  Stream<QuerySnapshot> fetchDoctorReview({String? docId}) =>
+      _docCollection.doc(docId).collection('review').snapshots();
 }

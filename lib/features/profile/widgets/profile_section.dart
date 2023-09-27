@@ -8,6 +8,7 @@ import '../../../core/constant/appcolor.dart';
 import '../../../core/constant/string_constant.dart';
 import '../../../core/services/authentication/model/user_model.dart';
 import '../controller/profile_controller.dart';
+import '../view/appointment_history.dart';
 
 // ignore: must_be_immutable
 class ProfileSection extends StatelessWidget {
@@ -62,8 +63,10 @@ class ProfileSection extends StatelessWidget {
                 SizedBox(
                   height: 25.h,
                 ),
-                _buildCustomContainer(context,
-                    text: "My Appointment", ontap: () {}),
+                _buildCustomContainer(context, text: "My Appointment",
+                    ontap: () {
+                  Get.to(() => AppointmentHistory());
+                }),
                 SizedBox(
                   height: 30.h,
                 ),
@@ -111,19 +114,21 @@ class ProfileSection extends StatelessWidget {
 
   Widget _buildCustomContainer(BuildContext context,
       {required String text, required VoidCallback ontap}) {
-    return Container(
-      height: 50.h,
-      width: Get.width,
-      decoration: BoxDecoration(
-          color: AppColor.greyColor.withOpacity(0.3),
-          borderRadius: const BorderRadius.all(Radius.circular(12))),
-      child: ListTile(
-        title: Text(text),
-        onTap: () => ontap,
-        trailing: const Icon(
-          Icons.arrow_back_ios_new,
-          size: 20,
-          color: AppColor.blackColor,
+    return GestureDetector(
+      onTap: ontap,
+      child: Container(
+        height: 50.h,
+        width: Get.width,
+        decoration: BoxDecoration(
+            color: AppColor.greyColor.withOpacity(0.3),
+            borderRadius: const BorderRadius.all(Radius.circular(12))),
+        child: ListTile(
+          title: Text(text),
+          trailing: const Icon(
+            Icons.arrow_back_ios_new,
+            size: 20,
+            color: AppColor.blackColor,
+          ),
         ),
       ),
     );

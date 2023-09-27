@@ -8,6 +8,7 @@ import 'package:mediplus/features/dashboard/controller/payment_controller.dart';
 import '../../../core/services/user/model/service_model.dart';
 import '../../../core/utlis/shimmer_manager.dart';
 import '../../../core/utlis/utlis.dart';
+import '../../bottom_tab/screen/bottom_tab.dart';
 
 // ignore: must_be_immutable
 class PaymentScreen extends StatelessWidget {
@@ -56,6 +57,8 @@ class PaymentScreen extends StatelessWidget {
 
   Widget _checkOut(BuildContext context,
       {required ServiceChargeModel serviceCharge}) {
+    int amount = int.parse(serviceCharge.servicesCharge.toString()) +
+        int.parse(ctr.doc.fee.toString());
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -71,21 +74,24 @@ class PaymentScreen extends StatelessWidget {
                       fontSize: 12,
                       color: AppColor.greyColor),
                 ),
-                Text(
-                    '${currencyFormat.format(double.parse('${serviceCharge.servicesCharge}'))}')
+                Text('N ${currencyFormat.format(amount)}')
               ],
             ),
             SizedBox(height: 20.h),
             _buildExpansionContainer(context,
                 paymentChannel: 'Flutterwave',
-                text: 'You are about to make a payment of N600 via Flutterwave',
-                ontap: () {}),
+                text:
+                    'You are about to make a payment of N ${currencyFormat.format(amount)} via Flutterwave',
+                ontap: () {
+              Get.offAll(() => BottomTab());
+            }),
             SizedBox(height: 20.h),
             _buildExpansionContainer(context,
                 paymentChannel: 'Stripe',
-                text: 'You are about to make a payment of N600 via Stripe',
+                text:
+                    'You are about to make a payment of N ${currencyFormat.format(amount)} via Stripe',
                 ontap: () {
-              ctr.makePayment(amount: '600.00', currency: 'USD');
+              ctr.makePayment(amount: amount.toString(), currency: 'USD');
             }),
           ],
         ),

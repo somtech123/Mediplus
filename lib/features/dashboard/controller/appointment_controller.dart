@@ -40,6 +40,8 @@ class AppointmentController extends GetxController {
     _isSelectedTime.value = true;
 
     currentTime.value = date;
+
+    debugPrint(currentTime.value.toString());
   }
 
   bool isTimeSelected(TimeOfDay date) {

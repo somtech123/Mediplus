@@ -4,13 +4,17 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mediplus/core/services/user/usecase.dart';
 
+import '../../../core/services/user/model/doctor_model.dart';
 import '../../../core/services/user/model/service_model.dart';
 import '../../../core/shared_widgets/alert_widget.dart';
 import '../../../core/shared_widgets/snack_bar.dart';
 import '../../../env/private_key.dart';
+import '../../bottom_tab/screen/bottom_tab.dart';
 
 class PaymentController extends GetxController {
   final UserServices _userServices = UserServices();
+
+  DoctorModel doc = Get.arguments;
 
   Map<String, dynamic>? paymentIntentData;
 
@@ -39,6 +43,8 @@ class PaymentController extends GetxController {
   displayPaymentSheet() async {
     try {
       await Stripe.instance.presentPaymentSheet();
+
+      Get.offAll(() => BottomTab());
 
       showSuccessSnackBar('Payment', 'Payment Successful');
     } on Exception catch (e) {

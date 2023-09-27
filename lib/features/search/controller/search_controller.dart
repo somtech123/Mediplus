@@ -3,12 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/gloalctr.dart';
 import '../../../core/services/storage/storage.dart';
 import '../../../core/services/user/model/doctor_model.dart';
 import '../../../core/services/user/usecase.dart';
 
 class ExploreController extends GetxController {
   RxList<DoctorModel> user = <DoctorModel>[].obs;
+
+  var globalCtr = Get.find<GlobalController>();
+
   final _userServices = UserServices();
 
   final _storageService = StorageService();

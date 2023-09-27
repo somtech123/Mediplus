@@ -8,7 +8,7 @@ import 'package:mediplus/features/dashboard/controller/dashboard_controller.dart
 import '../../../core/constant/string_constant.dart';
 import '../../../core/services/user/usecase.dart';
 import '../../../core/utlis/shimmer_manager.dart';
-import 'doctor_detail.dart';
+import '../screen/doctor_detail.dart';
 
 // ignore: must_be_immutable
 class DashboardCard extends StatelessWidget {

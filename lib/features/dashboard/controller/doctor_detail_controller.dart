@@ -1,14 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/api/apiclient.dart';
+import '../../../core/gloalctr.dart';
 import '../../../core/services/user/model/doctor_model.dart';
+import '../../../core/shared_widgets/alert_widget.dart';
 
 class DoctorDetailController extends GetxController {
   RxBool isLoading = true.obs;
   DoctorModel doc = Get.arguments;
 
   Rx<Uint8List> bodyBytes = Uint8List(0).obs;
+
+  var globalCtr = Get.find<GlobalController>();
 
   Future<Uint8List> removeImg() async {
     isLoading.value = true;
@@ -17,6 +23,18 @@ class DoctorDetailController extends GetxController {
     bodyBytes.value = res;
     isLoading.value = false;
     return res;
+  }
+
+  Future<void> launchPhoneDialer() async {
+    if (doc.phone != null) {
+      final Uri uri = Uri(scheme: "tel", path: doc.phone);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        showErrorAlertWidget(Get.context!,
+            message: "Cannot launch dialer at this time");
+      }
+    }
   }
 
   int calculateYear(DateTime date) {

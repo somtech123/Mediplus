@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../constant/appcolor.dart';
 import '../constant/int_constant.dart';
@@ -274,7 +275,7 @@ class GreyButton extends StatelessWidget {
       {super.key, required this.ontap, required this.icon, required this.text});
   final VoidCallback ontap;
   final String text;
-  final IconData icon;
+  final Widget icon;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -294,7 +295,8 @@ class GreyButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: AppColor.primaryColor),
+            //Icon(icon, color: AppColor.primaryColor),
+            icon,
             SizedBox(width: 5.w),
             Text(
               text,

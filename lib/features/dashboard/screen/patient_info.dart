@@ -10,6 +10,8 @@ import 'package:mediplus/core/shared_widgets/primary_button.dart';
 import 'package:mediplus/features/dashboard/controller/patient_info_controller.dart';
 import 'package:mediplus/features/dashboard/screen/payment_screen.dart';
 
+import '../../authentication/widget/phone_text_field.dart';
+
 // ignore: must_be_immutable
 class PatientInfoScreen extends StatelessWidget {
   PatientInfoScreen({super.key});
@@ -63,6 +65,13 @@ class PatientInfoScreen extends StatelessWidget {
                 errorMessage: ctr.weightErrorText.value,
                 onChanged: (p0) => ctr.clearError(ctr.weightErrorText),
                 textInputType: TextInputType.number,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                child: PhoneTextField(
+                  controller: ctr.phoneController,
+                  errorMessage: ctr.phoneErrorText.value,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),

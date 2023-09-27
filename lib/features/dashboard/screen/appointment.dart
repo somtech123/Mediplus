@@ -25,7 +25,7 @@ class AppoinmentScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: AppColor.blackColor),
         title: const Text(
           "Appointment",
-          style: TextStyle(color: AppColor.blackColor, fontSize: 20),
+          style: TextStyle(color: AppColor.blackColor, fontSize: 15),
         ),
         centerTitle: true,
         elevation: 0,

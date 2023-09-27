@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediplus/core/constant/appcolor.dart';
 import 'package:mediplus/features/dashboard/controller/dashboard_controller.dart';
-import 'package:mediplus/features/dashboard/widget/tab/favourite_screen.dart';
+import 'package:mediplus/features/dashboard/screen/favourite_screen.dart';
 
 import '../../../core/shared_widgets/custom_textfield.dart';
 import '../../../core/utlis/shimmer_manager.dart';
@@ -24,12 +24,20 @@ class Dashboard extends StatelessWidget {
         elevation: 0,
         title: Padding(
           padding: EdgeInsets.only(left: 5.h),
-          child: Text(
-            "Hey, Oscar",
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: AppColor.blackColor, fontSize: 20.sp),
+          child: Obx(
+            () => ctr.globalCtr.isFetching.value == false
+                ? Container(
+                    height: 20,
+                    width: 20,
+                    color: Colors.amber,
+                  )
+                : Text(
+                    "Hey, ${ctr.globalCtr.user.value.firstName}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: AppColor.blackColor, fontSize: 20.sp),
+                  ),
           ),
         ),
         actions: [
