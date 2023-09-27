@@ -17,7 +17,7 @@ class CustomTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40.h,
-      width: 100.w,
+      width: 150.w,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: index == tabIndex

@@ -31,10 +31,12 @@ class PatientInfoController extends GetxController {
   var weightController = TextEditingController();
 
   var dateController = TextEditingController();
+  var phoneController = TextEditingController();
 
   clearError(RxString val) => val.value = '';
 
   RxString nameErrorText = ''.obs;
+  RxString phoneErrorText = ''.obs;
 
   RxString descriptionErrorText = ''.obs;
 
@@ -83,6 +85,12 @@ class PatientInfoController extends GetxController {
       weightErrorText.value = 'This Field is required';
     } else if (descriptionController.text.isEmpty) {
       descriptionErrorText.value = 'This Field is required';
+    } else if (phoneController.text.trim().isEmpty) {
+      showErrorAlertWidget(Get.context!,
+          message: 'Please enter your phone number', title: 'An error occured');
+    } else if (!phoneController.text.isNumericOnly) {
+      showErrorAlertWidget(Get.context!,
+          message: 'Invalid phone number format', title: 'An Error occured');
     } else {
       bookAppointment();
     }
@@ -94,7 +102,7 @@ class PatientInfoController extends GetxController {
     String res = await _verifyInfo();
 
     if (res == 'success') {
-      Get.to(() => PaymentScreen());
+      Get.to(() => PaymentScreen(), arguments: _ctr.doc);
     } else {
       Get.back();
       showErrorAlertWidget(Get.context!, message: res);
@@ -110,6 +118,7 @@ class PatientInfoController extends GetxController {
 
         Map<String, dynamic> _payload() => {
               'patient_name': nameController.text,
+              'doctor_id': _ctr.doc.id,
               'doctor_firstname': _ctr.doc.firstname,
               'doctor_lastname': _ctr.doc.lastname,
               'specialtist': _ctr.doc.specialist,
@@ -118,9 +127,18 @@ class PatientInfoController extends GetxController {
               'payment_status': PrivateKey.paymentStatus,
               "patient_DOB": selectedDate.value.toIso8601String(),
               'patient_weight': weightController.text,
+              'patient_phone': phoneController.text,
+              'status': PrivateKey.appointmentStatus,
               'appointment_description': descriptionController.text,
               'appointment_date': _ctr.currentDate.value.toIso8601String(),
-              'appointment_time': _timeToFirebase(_ctr.currentTime.value),
+              'appointment_time': DateTime(
+                      _ctr.currentDate.value.year,
+                      _ctr.currentDate.value.month,
+                      _ctr.currentDate.value.day,
+                      _ctr.currentTime.value.hour,
+                      _ctr.currentTime.value.minute)
+                  .toIso8601String(),
+              //_timeToFirebase(_ctr.currentTime.value),
               'report': fileUrl,
               'date_created': DateTime.now().toIso8601String()
             };
@@ -143,6 +161,7 @@ class PatientInfoController extends GetxController {
   Map<String, dynamic> payload() => {
         'patient_name': nameController.text,
         'doctor_firstname': _ctr.doc.firstname,
+        'doctor_id': _ctr.doc.id,
         'doctor_lastname': _ctr.doc.lastname,
         'specialtist': _ctr.doc.specialist,
         'doctor_photo': _ctr.doc.photo,
@@ -150,9 +169,17 @@ class PatientInfoController extends GetxController {
         'payment_status': PrivateKey.paymentStatus,
         "patient_DOB": selectedDate.value.toIso8601String(),
         'patient_weight': weightController.text,
+        'patient_phone': phoneController.text,
         'appointment_description': descriptionController.text,
         'appointment_date': _ctr.currentDate.value.toIso8601String(),
-        'appointment_time': _timeToFirebase(_ctr.currentTime.value),
+        'status': PrivateKey.appointmentStatus,
+        'appointment_time': DateTime(
+                _ctr.currentDate.value.year,
+                _ctr.currentDate.value.month,
+                _ctr.currentDate.value.day,
+                _ctr.currentTime.value.hour,
+                _ctr.currentTime.value.minute)
+            .toIso8601String(),
         'report': [],
         'date_created': DateTime.now().toIso8601String()
       };

@@ -74,6 +74,10 @@ dependencies:
   flutter_stripe: ^9.4.0
   # zego_uikit_prebuilt_call: ^3.14.0
   file_picker: ^5.5.0 
+  dash_chat_2: ^0.0.18
+  url_launcher: ^6.1.14
+  share_plus: ^7.1.0
+  
 
 dev_dependencies:
 

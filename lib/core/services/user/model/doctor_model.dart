@@ -101,7 +101,7 @@ class TimePeiod {
     this.minutes,
   });
 
-  factory TimePeiod.fromJson(Map<String, dynamic> data) =>
+  factory TimePeiod.fromJson(Map<dynamic, dynamic> data) =>
       TimePeiod(hour: data['hour'], minutes: data['minutes']);
 
   Map<String?, dynamic> toJson() => {'hour': hour, 'minutes': minutes};

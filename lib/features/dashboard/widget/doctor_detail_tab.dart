@@ -24,7 +24,7 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
 
   @override
   void initState() {
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(length: 2, vsync: this);
 
     controller!.addListener(() {
       tabIndex = controller!.animation!.value.round();
@@ -49,13 +49,8 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
                     tabIndex: tabIndex,
                   ),
                   CustomTab(
-                    text: 'Experience',
-                    index: 1,
-                    tabIndex: tabIndex,
-                  ),
-                  CustomTab(
                     text: 'Review',
-                    index: 2,
+                    index: 1,
                     tabIndex: tabIndex,
                   )
                 ],
@@ -86,13 +81,6 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
                 ],
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  DocExperience(doc: ctr.doc),
-                ],
-              ),
-              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
