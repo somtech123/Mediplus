@@ -6,7 +6,6 @@ import 'package:mediplus/features/dashboard/widget/sub_widget/doc_info.dart';
 import 'package:mediplus/features/dashboard/widget/sub_widget/review_screen.dart';
 
 import '../controller/doctor_detail_controller.dart';
-import 'sub_widget/doc_experience_widget.dart';
 
 class DoctorDetailTabWidget extends StatefulWidget {
   const DoctorDetailTabWidget({super.key});
@@ -41,6 +40,7 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
+              flex: 1,
               child: TabBar(
                 tabs: [
                   CustomTab(
@@ -68,28 +68,16 @@ class _DoctorDetailTabWidgetState extends State<DoctorDetailTabWidget>
         ),
         SizedBox(height: 20.h),
         SizedBox(
-          height: Get.height,
+          height: 290.h,
           child: TabBarView(
             controller: controller,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  DocInfo(),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ReviewWidget(),
-                ],
-              )
+              DocInfo(),
+              ReviewWidget(),
             ],
           ),
-        )
+        ),
       ],
     );
   }

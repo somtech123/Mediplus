@@ -77,6 +77,8 @@ dependencies:
   dash_chat_2: ^0.0.18
   url_launcher: ^6.1.14
   share_plus: ^7.1.0
+  screenshot: ^2.1.0
+  path_provider: ^2.0.9  
   
 
 dev_dependencies:

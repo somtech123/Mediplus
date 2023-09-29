@@ -9,6 +9,7 @@ import '../../../../core/shared_widgets/primary_button.dart';
 import '../../controller/doctor_detail_controller.dart';
 import '../../screen/appointment.dart';
 
+// ignore: must_be_immutable
 class DocInfo extends StatelessWidget {
   DocInfo({super.key});
 
@@ -16,7 +17,7 @@ class DocInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

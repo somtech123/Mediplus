@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,6 +51,29 @@ class UserServices {
       return ChatUserModel();
     }
   }
+
+  Stream<UserModel> getProfilePhoto({String? id}) {
+    StreamController<UserModel> controller = StreamController<UserModel>();
+
+    _firestore.collection("users").doc(id).snapshots().listen((event) {
+      if (event.exists) {
+        var user = UserModel.fromJson(event.data()!);
+        controller.add(user);
+      } else {
+        controller.addError("User not found");
+      }
+    });
+
+    return controller.stream;
+  }
+
+  // Stream<UserModel> getProfilePhoto({String? id}) async* {
+  //   DocumentSnapshot<Map<String, dynamic>> ref =
+  //       await _firestore.collection("users").doc(id).get();
+  //   var user = UserModel.fromJson(ref.data()!);
+
+  //   yield user;
+  // }
 
   Future<DoctorModel> getDoctorById(id) async {
     try {
@@ -118,6 +142,25 @@ class UserServices {
     } catch (e) {
       res = e.toString();
       debugPrint(e.toString());
+    }
+    return res;
+  }
+
+  Future<String> updateProfilePhoto(File file) async {
+    String res = '';
+    try {
+      if (file != null) {
+        String photo = await StorageMethod().updateProfile(file);
+        await _firestore
+            .collection("users")
+            .doc(_auth.currentUser!.uid)
+            .update({'profileImage': photo});
+        res = 'success';
+      } else {
+        res = 'no photo selected';
+      }
+    } catch (e) {
+      res = e.toString();
     }
     return res;
   }

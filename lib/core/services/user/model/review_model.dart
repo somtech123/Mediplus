@@ -18,7 +18,8 @@ class ReviewModel {
       lastname: json['lastname'],
       rating: json['rating'],
       comment: json['comment'],
-      dateCreated: json['date_created']);
+      photo: json['photoUrl'],
+      dateCreated: DateTime.parse(json['date_created']));
 
   Map<String?, dynamic> toJson() => {
         'fistname': firstname,

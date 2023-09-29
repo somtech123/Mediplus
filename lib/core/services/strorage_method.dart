@@ -46,4 +46,21 @@ class StorageMethod {
     } catch (e) {}
     return imageUrl;
   }
+
+  Future<String> updateProfile(File file) async {
+    String imageUrl = '';
+    try {
+      Reference ref = _storage
+          .ref()
+          .child('profilePhoto/${_auth.currentUser!.uid}')
+          .child(_auth.currentUser!.uid);
+
+      UploadTask uploadTask = ref.putFile(file);
+
+      TaskSnapshot snap = await uploadTask;
+
+      imageUrl = await snap.ref.getDownloadURL();
+    } catch (e) {}
+    return imageUrl;
+  }
 }

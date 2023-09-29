@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/api/apiclient.dart';
@@ -11,6 +16,22 @@ import '../../../core/shared_widgets/alert_widget.dart';
 class DoctorDetailController extends GetxController {
   RxBool isLoading = true.obs;
   DoctorModel doc = Get.arguments;
+
+  ScreenshotController screenshotController = ScreenshotController();
+
+  Future takeScreenshot() async {
+    final imageBytes = await screenshotController.capture();
+
+    if (imageBytes != null) {
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = await File('${directory.path}/image.png');
+      await imagePath.writeAsBytes(imageBytes);
+
+      await Share.shareXFiles([XFile(imagePath.path)]);
+    } else {
+      print('Screenshot capture failed');
+    }
+  }
 
   Rx<Uint8List> bodyBytes = Uint8List(0).obs;
 

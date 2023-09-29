@@ -7,6 +7,10 @@ import 'package:mediplus/features/profile/widgets/grey_container.dart';
 import '../../../core/constant/appcolor.dart';
 import '../../../core/constant/string_constant.dart';
 import '../../../core/services/authentication/model/user_model.dart';
+import '../../../core/services/user/usecase.dart';
+import '../../../core/shared_widgets/alert_widget.dart';
+import '../../../core/shared_widgets/shared_botoom_sheet.dart';
+import '../../../core/shared_widgets/warning_alert.dart';
 import '../controller/profile_controller.dart';
 import '../view/appointment_history.dart';
 
@@ -15,6 +19,8 @@ class ProfileSection extends StatelessWidget {
   ProfileSection({super.key, required this.user});
   final UserModel user;
   var ctr = Get.find<ProfileController>();
+
+  final UserServices _userServices = UserServices();
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +34,18 @@ class ProfileSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      maxRadius: 50,
-                      backgroundImage: user.profileImage!.isEmpty
-                          ? NetworkImage(StringConstants.dummyProfilePicture)
-                          : NetworkImage(user.profileImage!),
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      right: 10,
-                      child: SvgPicture.asset('assets/svgs/ic_camera.svg'),
-                    ),
-                  ],
+                StreamBuilder(
+                  stream: _userServices.getProfilePhoto(id: user.id),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return const Text('an error occured');
+                    } else {
+                      UserModel? _user = snapshot.data;
+                      return profileLayout(context, data: _user!);
+                    }
+                  },
                 ),
                 Text(
                   "${user.firstName} ${user.lastName}",
@@ -85,7 +89,16 @@ class ProfileSection extends StatelessWidget {
                   height: 30.h,
                 ),
                 GestureDetector(
-                  onTap: () => ctr.authservices.signOut(),
+                  // onTap: () => showWarningAlertWidget(context,
+                  //     isDoubleButton: true,
+                  //     action2: () => Get.back(),
+                  //     message: 'Are you sure you want to logot?',
+                  //     action: () => ctr.authservices.signOut(),
+                  //     label: 'Yes'),
+                  onTap: () => buildLogoutAlertWidget(
+                    context,
+                    action1: () => ctr.authservices.signOut(),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -130,6 +143,56 @@ class ProfileSection extends StatelessWidget {
             color: AppColor.blackColor,
           ),
         ),
+      ),
+    );
+  }
+
+  Widget profileLayout(BuildContext context, {required UserModel data}) {
+    return InkWell(
+      onTap: () {
+        Get.defaultDialog(
+          title: 'Update Profile Photo',
+          content: Container(),
+          actions: [
+            ElevatedButton.icon(
+              onPressed: () {
+                ctr.takeCameraImage();
+                Get.back();
+              },
+              icon: const Icon(Icons.camera),
+              label: const Text('Take a Photo'),
+              style: ElevatedButton.styleFrom(
+                primary: AppColor.primaryColor,
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                ctr.pickFromGallery();
+                Get.back();
+              },
+              icon: const Icon(Icons.browse_gallery),
+              label: const Text('Choose From Gallery'),
+              style: ElevatedButton.styleFrom(
+                primary: AppColor.primaryColor,
+              ),
+            )
+          ],
+        );
+      },
+      child: Stack(
+        children: [
+          CircleAvatar(
+            maxRadius: 50,
+            backgroundImage: data.profileImage!.isEmpty
+                ? NetworkImage(StringConstants.dummyProfilePicture)
+                : NetworkImage(data.profileImage!),
+          ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: SvgPicture.asset('assets/svgs/ic_camera.svg'),
+          ),
+        ],
       ),
     );
   }
