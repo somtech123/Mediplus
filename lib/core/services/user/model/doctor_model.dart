@@ -41,7 +41,7 @@ class DoctorModel {
       this.noonSlot,
       this.photo});
 
-  factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
+  factory DoctorModel.fromJson(Map<dynamic, dynamic> json) => DoctorModel(
         id: json["id"],
         firstname: json["firstName"],
         lastname: json["lastName"],
@@ -51,7 +51,8 @@ class DoctorModel {
         department: json['department'],
         designation: json['designation'],
         specialist: json['specialtist'],
-        experience: (json['experience'] as Timestamp).toDate(),
+        experience: _parseTimestamp(json['experience']),
+        //(json['experience'] as Timestamp).toDate(),
         // json['experience'] as Timestamp,
         rating: json['rating'],
         bio: json['bio'],
@@ -70,7 +71,7 @@ class DoctorModel {
             .toList(),
       );
 
-  Map<String?, dynamic> toJson() => {
+  Map<dynamic, dynamic> toJson() => {
         "id": id,
         "firstName": firstname,
         "lastName": lastname,
@@ -91,8 +92,16 @@ class DoctorModel {
         'afternoon slot': List<dynamic>.from(noonSlot!.map((x) => x.toJson())),
         'evening slot': List<dynamic>.from(nightSlot!.map((x) => x.toJson())),
       };
+
+  static DateTime? _parseTimestamp(dynamic timestamp) {
+    if (timestamp is Timestamp) {
+      return timestamp.toDate();
+    } else if (timestamp is String) {
+      return DateTime.tryParse(timestamp);
+    }
+    return null;
+  }
 }
-//
 
 class TimePeiod {
   int? hour, minutes;

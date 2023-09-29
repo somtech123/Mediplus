@@ -119,10 +119,10 @@ class Dashboard extends StatelessWidget {
                   color: AppColor.blackColor,
                 ),
               ),
-              SizedBox(
-                height: 20.h,
-              ),
-              const FeatureCard(),
+              // SizedBox(
+              //   height: 20.h,
+              // ),
+              //  const FeatureCard(),
               SizedBox(
                 height: 20.h,
               ),

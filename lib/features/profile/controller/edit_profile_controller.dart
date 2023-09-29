@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/services/authentication/model/user_model.dart';
 import '../../../core/services/user/usecase.dart';
 import '../../../core/shared_widgets/alert_widget.dart';
 import '../../../core/shared_widgets/loading_widgets.dart';
+import '../../../core/shared_widgets/snack_bar.dart';
 import '../../../core/utlis/country_model.dart';
 import '../../../core/utlis/country_state_utlis.dart';
 import '../../bottom_tab/screen/bottom_tab.dart';
@@ -71,6 +71,8 @@ class EditProfileController extends GetxController {
 
     if (res == 'success') {
       Get.offAll(() => BottomTab());
+
+      showSuccessSnackBar('Update Profile', 'Profile updated Successfully');
     } else {
       Get.back();
       showErrorAlertWidget(Get.context!, message: res);

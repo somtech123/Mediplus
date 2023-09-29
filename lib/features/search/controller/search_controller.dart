@@ -42,7 +42,7 @@ class ExploreController extends GetxController {
     List<String> userJsonList = await _storageService.getrecentSearch();
 
     user.value = userJsonList.map((userJson) {
-      Map<String, dynamic> userMap = json.decode(userJson);
+      Map<dynamic, dynamic> userMap = json.decode(userJson);
       return DoctorModel.fromJson(userMap);
     }).toList();
     debugPrint(user.toString());

@@ -54,9 +54,6 @@ class FavouriteScreen extends StatelessWidget {
 
                     return layout(context, favouriteDoc: _fav);
                   },
-                  // separatorBuilder: (_, __) => SizedBox(
-                  //       height: 18.h,
-                  //     ),
                   itemCount: docList.length);
             }
           } else if (snapshot.hasError) {

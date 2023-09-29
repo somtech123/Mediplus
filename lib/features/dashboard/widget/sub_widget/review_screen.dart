@@ -20,48 +20,50 @@ class ReviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: StreamBuilder(
-        stream: _userServices.fetchDoctorReview(docId: ctr.doc.id),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
-            var docList = snapshot.data!.docs;
+    return
+        // Expanded(
+        //   child:
+        StreamBuilder(
+      stream: _userServices.fetchDoctorReview(docId: ctr.doc.id),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData && snapshot.data != null) {
+          var docList = snapshot.data!.docs;
 
-            if (docList.isEmpty) {
-              return const SizedBox.shrink();
-            } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Review (${docList.length})',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.blackColor,
-                        ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          ReviewModel _review =
-                              ReviewModel.fromJson(docList[index].data());
-                          return _layout(context, review: _review);
-                        },
-                        itemCount: docList.length),
-                  )
-                ],
-              );
-            }
-          } else if (snapshot.hasError) {
-            return const Center(
-                child: Text('Could not get doctor review at the moment'));
+          if (docList.isEmpty) {
+            return const SizedBox.shrink();
+          } else {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Review (${docList.length})',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.blackColor,
+                      ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        ReviewModel _review =
+                            ReviewModel.fromJson(docList[index].data());
+                        return _layout(context, review: _review);
+                      },
+                      itemCount: docList.length),
+                )
+              ],
+            );
           }
-          return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ShimmerManager.textShimmer(context));
-        },
-      ),
+        } else if (snapshot.hasError) {
+          return const Center(
+              child: Text('Could not get doctor review at the moment'));
+        }
+        return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: ShimmerManager.textShimmer(context));
+      },
+      // ),
     );
   }
 

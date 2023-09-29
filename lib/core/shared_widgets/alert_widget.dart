@@ -77,6 +77,7 @@ buildLogoutAlertWidget(BuildContext context,
   return buildCustomAlertWidgetWrapper(context,
       color: AppColor.alert,
       bgColor: AppColor.alert,
+      barrierDismissible: false,
       widget: Column(
         children: [
           ListTile(
