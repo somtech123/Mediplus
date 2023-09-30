@@ -79,11 +79,11 @@ class PaymentScreen extends StatelessWidget {
             ),
             SizedBox(height: 20.h),
             _buildExpansionContainer(context,
-                paymentChannel: 'Flutterwave',
+                paymentChannel: 'PayStack',
                 text:
-                    'You are about to make a payment of N ${currencyFormat.format(amount)} via Flutterwave',
+                    'You are about to make a payment of N ${currencyFormat.format(amount)} via PayStack',
                 ontap: () {
-              Get.offAll(() => BottomTab());
+              ctr.paystackCheckout(amount: amount.toString());
             }),
             SizedBox(height: 20.h),
             _buildExpansionContainer(context,
@@ -91,7 +91,7 @@ class PaymentScreen extends StatelessWidget {
                 text:
                     'You are about to make a payment of N ${currencyFormat.format(amount)} via Stripe',
                 ontap: () {
-              ctr.makePayment(amount: amount.toString(), currency: 'USD');
+              ctr.makePayment(amount: amount.toString(), currency: 'NGN');
             }),
           ],
         ),

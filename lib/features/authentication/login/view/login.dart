@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,9 +8,11 @@ import '../../../../core/shared_widgets/custom_divider.dart';
 import '../../../../core/shared_widgets/custom_textfield.dart';
 import '../../../../core/shared_widgets/primary_button.dart';
 import '../../reset/view/reset_password.dart';
+import '../../sign_up/view/signup.dart';
 import '../../widget/social_media_widget.dart';
 import '../controller/login_controller.dart';
 
+// ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
@@ -126,6 +129,10 @@ class LoginScreen extends StatelessWidget {
                                   .copyWith(
                                       color: AppColor.errorColor,
                                       fontSize: 15.sp),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.to(() => SignUPSceen());
+                                },
                             )
                           ],
                         ),

@@ -1,9 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
 import 'package:mediplus/core/services/user/usecase.dart';
 
+import '../../../core/api/apiclient.dart';
+import '../../../core/gloalctr.dart';
 import '../../../core/services/user/model/doctor_model.dart';
 import '../../../core/services/user/model/service_model.dart';
 import '../../../core/shared_widgets/alert_widget.dart';
@@ -16,6 +21,7 @@ class PaymentController extends GetxController {
 
   DoctorModel doc = Get.arguments;
 
+  var globalCtr = Get.find<GlobalController>();
   Map<String, dynamic>? paymentIntentData;
 
   Future<void> makePayment(
@@ -50,11 +56,18 @@ class PaymentController extends GetxController {
     } on Exception catch (e) {
       if (e is StripeException) {
         print("Error from Stripe: ${e.error.localizedMessage}");
+
+        showErrorAlertWidget(Get.context!,
+            message: ' ${e.error.localizedMessage}');
       } else {
         print("Unforeseen error: ${e}");
+
+        showErrorAlertWidget(Get.context!, message: "Unforeseen error: ${e}");
       }
     } catch (e) {
       print("exception:$e");
+
+      showErrorAlertWidget(Get.context!, message: '$e');
     }
   }
 
@@ -84,12 +97,55 @@ class PaymentController extends GetxController {
     }
   }
 
-  calculateAmount(String amount) {
+  int calculateAmount(String amount) {
     final a = (int.parse(amount)) * 100;
-    return a.toString();
+    return a;
+  }
+
+  String _getReference() {
+    String platform;
+    if (Platform.isIOS) {
+      platform = 'iOS';
+    } else {
+      platform = 'Android';
+    }
+
+    return 'ChargedFrom${platform}_${DateTime.now().millisecondsSinceEpoch}';
   }
 
   Future<ServiceChargeModel> getServiceCharge() async {
     return await _userServices.getServiceCharge();
+  }
+
+  final plugin = PaystackPlugin();
+
+  paystackCheckout({required String amount}) async {
+    Charge charge = Charge()
+      ..amount = calculateAmount(amount)
+      ..accessCode = await ApiClient().createAccessCode(
+          ref: _getReference(),
+          email: globalCtr.user.value.email!,
+          amount: calculateAmount(amount))
+      ..reference = _getReference()
+      ..email = globalCtr.user.value.email
+      ..currency = "NGN";
+    CheckoutResponse response = await plugin.checkout(
+      Get.context!,
+      method: CheckoutMethod.selectable,
+      charge: charge,
+    );
+    if (response == true) {
+      Get.offAll(() => BottomTab());
+
+      showSuccessSnackBar('Payment', 'Payment Successful');
+    } else {
+      showErrorAlertWidget(Get.context!, message: 'An Error Occured');
+    }
+  }
+
+  @override
+  void onInit() {
+    plugin.initialize(publicKey: PrivateKey.payStackPublicKey);
+    super.onInit();
   }
 }

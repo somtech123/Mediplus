@@ -78,7 +78,13 @@ dependencies:
   url_launcher: ^6.1.14
   share_plus: ^7.1.0
   screenshot: ^2.1.0
-  path_provider: ^2.0.9  
+  path_provider: ^2.0.9 
+  flutter_local_notifications: ^15.1.1
+  flutter_paystack: 
+   git:
+      url: https://github.com/inspireui/flutter_paystack
+      ###ref: ffd342ef628c34076fc66175cea5b2d25e3e8087
+      ref: master
   
 
 dev_dependencies:

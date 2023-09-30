@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:mediplus/env/private_key.dart';
 import 'package:mediplus/features/dashboard/controller/appointment_controller.dart';
 
+import '../../../core/gloalctr.dart';
+import '../../../core/services/notification/usecase.dart';
 import '../../../core/services/user/usecase.dart';
 import '../../../core/shared_widgets/alert_widget.dart';
 import '../../../core/shared_widgets/loading_widgets.dart';
@@ -17,6 +19,8 @@ class PatientInfoController extends GetxController {
   RxList<PlatformFile> file = <PlatformFile>[].obs;
 
   var _ctr = Get.find<AppointmentController>();
+
+  var globalCtr = Get.find<GlobalController>();
 
   final FirebaseDatabase _db = FirebaseDatabase.instance;
 
@@ -103,6 +107,8 @@ class PatientInfoController extends GetxController {
 
     if (res == 'success') {
       Get.to(() => PaymentScreen(), arguments: _ctr.doc);
+      LocalNotificationService.notifyUser(
+          title: 'Appointment', body: 'you booked an appointment for');
     } else {
       Get.back();
       showErrorAlertWidget(Get.context!, message: res);
@@ -143,10 +149,20 @@ class PatientInfoController extends GetxController {
               'date_created': DateTime.now().toIso8601String()
             };
 
-        await _db.ref().child('appointments').push().set(_payload());
+        await _db
+            .ref()
+            .child('appointments')
+            .child(globalCtr.user.value.id!)
+            .push()
+            .set(_payload());
         res = 'success';
       } else {
-        await _db.ref().child('appointments').push().set(payload());
+        await _db
+            .ref()
+            .child('appointments')
+            .child(globalCtr.user.value.id!)
+            .push()
+            .set(payload());
         res = 'success';
       }
     } catch (e) {
