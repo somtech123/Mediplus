@@ -3,14 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediplus/core/constant/appcolor.dart';
 import 'package:mediplus/features/dashboard/controller/dashboard_controller.dart';
+import 'package:mediplus/features/dashboard/screen/doctor_detail.dart';
 import 'package:mediplus/features/dashboard/screen/favourite_screen.dart';
 
-import '../../../core/services/notification/usecase.dart';
 import '../../../core/shared_widgets/custom_textfield.dart';
 import '../../../core/utlis/shimmer_manager.dart';
 import '../widget/dashboard_banner.dart';
 import '../widget/dashboard_card.dart';
-import '../widget/feature_card.dart';
 
 // ignore: must_be_immutable
 class Dashboard extends StatelessWidget {
@@ -27,11 +26,7 @@ class Dashboard extends StatelessWidget {
           padding: EdgeInsets.only(left: 5.h),
           child: Obx(
             () => ctr.globalCtr.isFetching.value == false
-                ? Container(
-                    height: 20,
-                    width: 20,
-                    color: Colors.amber,
-                  )
+                ? const SizedBox.shrink()
                 : Text(
                     "Hey, ${ctr.globalCtr.user.value.firstName}",
                     style: Theme.of(context)
@@ -164,6 +159,10 @@ class Dashboard extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                           child: DashboardBanner(
                             user: snapshot.data![index],
+                            ontap: () {
+                              Get.to(() => DoctorDetailPage(),
+                                  arguments: snapshot.data![index]);
+                            },
                           ),
                         ),
                         itemCount: snapshot.data!.length,

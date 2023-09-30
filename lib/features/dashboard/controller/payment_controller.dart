@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 import 'package:mediplus/core/services/user/usecase.dart';
 
-import '../../../core/api/apiclient.dart';
 import '../../../core/gloalctr.dart';
 import '../../../core/services/user/model/doctor_model.dart';
 import '../../../core/services/user/model/service_model.dart';
@@ -122,24 +121,24 @@ class PaymentController extends GetxController {
   paystackCheckout({required String amount}) async {
     Charge charge = Charge()
       ..amount = calculateAmount(amount)
-      ..accessCode = await ApiClient().createAccessCode(
-          ref: _getReference(),
-          email: globalCtr.user.value.email!,
-          amount: calculateAmount(amount))
-      ..reference = _getReference()
+      //..accessCode = 'AUTH_6tmt288t0o'
+      //PrivateKey.pasystackPrivateKey
       ..email = globalCtr.user.value.email
+      ..reference = _getReference()
       ..currency = "NGN";
+
     CheckoutResponse response = await plugin.checkout(
       Get.context!,
-      method: CheckoutMethod.selectable,
+      method: CheckoutMethod.card,
       charge: charge,
     );
-    if (response == true) {
-      Get.offAll(() => BottomTab());
+
+    if (response.message == 'Success') {
+      Get.offAll(() => const BottomTab());
 
       showSuccessSnackBar('Payment', 'Payment Successful');
     } else {
-      showErrorAlertWidget(Get.context!, message: 'An Error Occured');
+      showErrorAlertWidget(Get.context!, message: response.message);
     }
   }
 
