@@ -12,10 +12,13 @@ import 'package:mediplus/features/splash/screen/splash_screen.dart';
 
 import 'core/constant/appcolor.dart';
 import 'core/route/routes.dart';
+import 'core/services/notification/usecase.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Stripe.publishableKey = PrivateKey.stripePublicKey;
+  LocalNotificationService.initialize();
+
   await Stripe.instance.applySettings();
   await Firebase.initializeApp();
   runApp(MyApp());

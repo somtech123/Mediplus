@@ -5,6 +5,7 @@ import 'package:mediplus/core/constant/appcolor.dart';
 import 'package:mediplus/features/dashboard/controller/dashboard_controller.dart';
 import 'package:mediplus/features/dashboard/screen/favourite_screen.dart';
 
+import '../../../core/services/notification/usecase.dart';
 import '../../../core/shared_widgets/custom_textfield.dart';
 import '../../../core/utlis/shimmer_manager.dart';
 import '../widget/dashboard_banner.dart';
@@ -53,6 +54,7 @@ class Dashboard extends StatelessWidget {
             width: 15.w,
           ),
           GestureDetector(
+            //  onTap: () => LocalNotificationService.display(),
             child: Icon(
               Icons.notifications_none,
               color: AppColor.primaryColor,

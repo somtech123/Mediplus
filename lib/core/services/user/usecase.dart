@@ -235,6 +235,7 @@ class UserServices {
       var snap = await _db
           .ref()
           .child('appointments')
+          .child(_auth.currentUser!.uid)
           .orderByChild('date_created')
           .once();
 
@@ -269,6 +270,7 @@ class UserServices {
       var snap = await _db
           .ref()
           .child('appointments')
+          .child(_auth.currentUser!.uid)
           .orderByChild('status')
           .equalTo(status)
           .once();
@@ -302,6 +304,7 @@ class UserServices {
       var snap = await _db
           .ref()
           .child('appointments')
+          .child(_auth.currentUser!.uid)
           .orderByChild('status')
           .startAt('completed' + '\uf8ff')
 

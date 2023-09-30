@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constant/appcolor.dart';
-import '../../../core/shared_widgets/loading_widgets.dart';
 import '../login/controller/login_controller.dart';
 
 class SocialMediaButton extends StatelessWidget {

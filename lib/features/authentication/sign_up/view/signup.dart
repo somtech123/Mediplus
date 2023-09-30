@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,10 +7,11 @@ import 'package:mediplus/core/shared_widgets/primary_button.dart';
 
 import '../../../../core/shared_widgets/custom_divider.dart';
 import '../../../../core/shared_widgets/custom_textfield.dart';
+import '../../login/view/login.dart';
 import '../controller/signup_controller.dart';
 import '../../widget/social_media_widget.dart';
-import 'signup2_screen.dart';
 
+// ignore: must_be_immutable
 class SignUPSceen extends StatelessWidget {
   SignUPSceen({super.key});
 
@@ -105,7 +107,6 @@ class SignUPSceen extends StatelessWidget {
                     label: 'Create Account',
                     onPressed: () {
                       ctr.validateInput();
-                      //   Get.to(() => SignUpTwoScreen());
                     }),
                 SizedBox(height: 15.h),
                 Row(
@@ -125,6 +126,10 @@ class SignUPSceen extends StatelessWidget {
                                 .copyWith(
                                     color: AppColor.errorColor,
                                     fontSize: 15.sp),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Get.to(() => LoginScreen());
+                              },
                           )
                         ],
                       ),
@@ -135,8 +140,7 @@ class SignUPSceen extends StatelessWidget {
                   height: 50.h,
                 ),
                 const CustomDivider(),
-
-                /// SocialMediaButton()
+                SocialMediaButton()
               ],
             ),
           ),

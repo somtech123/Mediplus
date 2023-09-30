@@ -21,7 +21,6 @@ class GlobalController extends GetxController {
   @override
   void onReady() {
     getUserInfo();
-
     super.onReady();
   }
 }

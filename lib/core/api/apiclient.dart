@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -28,5 +29,23 @@ class ApiClient {
     } else {
       throw Exception("Error occurred with response ${response.statusCode}");
     }
+  }
+
+  Future<String> createAccessCode(
+      {required String ref, required String email, required int amount}) async {
+    // skTest -> Secret key
+    Map data = {"amount": amount, "email": email, "reference": ref};
+    String payload = json.encode(data);
+    http.Response response = await http.post(
+        Uri.parse('https://api.paystack.co/transaction/initialize'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${PrivateKey.pasystackPrivateKey}'
+        },
+        body: payload);
+    final Map res = jsonDecode(response.body);
+    String accessCode = res['data']['access_code'];
+    return accessCode;
   }
 }
