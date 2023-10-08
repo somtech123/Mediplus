@@ -97,16 +97,21 @@ class UserServices {
   }
 
   Future<List<DoctorModel>> getAllDoctors() async {
+
     try {
       final snap = await _firestore.collection("doctor").get();
-      final userdata = snap.docs
+      debugPrint(snap.docs.toString());
+     final  userdata = snap.docs
           .map((DocumentSnapshot<Map<String, dynamic>> e) =>
               DoctorModel.fromJson(e.data()!))
           .toList();
+
+      debugPrint(userdata.toString());
       return userdata;
     } catch (e) {
       return [];
     }
+
   }
 
   Future<List<DoctorModel>> searchDoctor(String query) async {
