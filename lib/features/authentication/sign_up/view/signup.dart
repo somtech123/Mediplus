@@ -140,7 +140,7 @@ class SignUPSceen extends StatelessWidget {
                   height: 50.h,
                 ),
                 const CustomDivider(),
-                SocialMediaButton()
+              //0  SocialMediaButton()
               ],
             ),
           ),
