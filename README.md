@@ -18,6 +18,11 @@ To run tests, run the following command
   flutter run 
 ```
 
+## Todo
+- Admin App
+- Push notification when chattin
+- Video call
+
 
 
 ## Application Features
