@@ -9,14 +9,20 @@ Mediplus is a user-friendly mobile application that connects patients with docto
 
 Android apk file for testing:
 [Android Apk](https://drive.google.com/file/d/1JT2UAZV-6NJHmXF4T2TiBioMzetb4U2O/view?usp=sharing)
+
+
 ## Running Tests
 
 To run tests, run the following command
 
 ```bash
   run flutter pub get 
-  flutter run 
+  flutter run
+ credentials:
+ test32@gmail.com
+ password123456
 ```
+
 
 ## Todo
 - Admin App
